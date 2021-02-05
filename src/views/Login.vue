@@ -2,21 +2,33 @@
   <div class="container clearfix">
     <div class="display-box">
       <div class="left">
-        <div class="desc">代码质量管理中心</div>
-        <div class="enc">Quality Center</div>
+        <div class="desc">{{$t('lang.brandTitle')}}</div>
+        <div class="enc">{{$t('lang.brandEng')}}</div>
       </div>
       <div class="right clearfix">
         <div class="login">
-          <h2>登录</h2>
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="60px" class="demo-ruleForm">
-            <el-form-item label="用户名" prop="username">
+          <h2>{{$t('lang.slogan')}}</h2>
+
+          <el-dropdown @command="handleCommand">
+            <span class="el-dropdown-link">
+              {{currentLang}}<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="zh">中文</el-dropdown-item>
+              <el-dropdown-item command="en">English</el-dropdown-item>
+              <el-dropdown-item command="kr">한국어</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="70px" class="demo-ruleForm">
+            <el-form-item :label="$t('lang.username')" prop="username">
               <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="pass">
+            <el-form-item :label="$t('lang.password')" prop="pass">
               <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">{{$t('lang.loginSubimt')}}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -30,6 +42,8 @@
 export default {
   data() {
     return {
+      langValue: false,
+      currentLang: '中文',
       ruleForm: {
         username: '',
         pass: '',
@@ -69,6 +83,11 @@ export default {
         }
       });
     },
+    handleCommand(command) {
+      console.log(command);
+      this.currentLang = command == 'zh' ? '中文' : command == 'en' ? 'English' : '한국어'
+      this.$i18n.locale = command == 'zh' ? 'zh' : command == 'en' ? 'en' : 'kr'
+    }
   }
 }
 </script>
@@ -79,6 +98,7 @@ export default {
 .el-form-item {
   margin-bottom: 26px;
 }
+
 .container {
   display: flex;
   justify-content: center;
@@ -116,6 +136,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 80%;
   background-position: 70% 80%;
+  user-select: none;
 }
 
 .left .desc,
@@ -138,6 +159,7 @@ export default {
 }
 
 .login {
+  position: relative;
   padding: 10px 20px;
   float: right;
   width: 84%;
@@ -149,5 +171,14 @@ export default {
 
 .login h2 {
   padding-bottom: 40px;
+}
+
+.el-dropdown {
+  position: absolute;
+  top: 7.5%;
+  right: 7%;
+  cursor: pointer;
+  user-select: none;
+  color: #ccc;
 }
 </style>

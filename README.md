@@ -12,6 +12,10 @@ axios：http://www.axios-js.com/docs/vue-axios.html
 
 dayjs 日期处理插件 ： https://dayjs.fenxianglu.cn/category/#typescript
 
+## vue-i18n 多语言插件
+
+http://kazupon.github.io/vue-i18n/zh/installation.html#yarn
+
 
 
 
