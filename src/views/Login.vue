@@ -2,7 +2,7 @@
   <div class="container clearfix">
     <div class="display-box">
       <div class="left">
-        <div class="desc">质量管理中心</div>
+        <div class="desc">代码质量管理中心</div>
         <div class="enc">Quality Center</div>
 
       </div>
@@ -21,7 +21,6 @@
             </el-form-item>
           </el-form>
         </div>
-        <div class="register" v-else></div>
       </div>
     </div>
   </div>
@@ -111,9 +110,8 @@ export default {
 .display-box {
   display: flex;
   padding: 20px;
-  min-width: 40vw;
   min-width: 50vw;
-  min-height: 60vh;
+  min-height: 56vh;
   background: #fff;
   box-sizing: border-box;
   border-radius: 8px;
@@ -125,22 +123,41 @@ export default {
 }
 
 .left {
-  min-height: 60vh;
+  position: relative;
+  min-height: 56vh;
   background: #fff;
   float: left;
   box-sizing: border-box;
   background-image: url("../assets/img/bgimg.svg");
   background-repeat: no-repeat;
-  background-size: 400px;
-  background-position: 60px 80px;
+  background-size: 88%;
+  background-position: 50px 90px;
 }
 
-.login,
-.register {
-  padding: 20px;
+.left .desc,
+.left .enc {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  font-size: 30px;
+  transform: translateY(-50%);
+}
+
+.left .desc {
+  top: 10%;
+  font-size: 24px;
+}
+
+.left .enc {
+  top: 17%;
+  font-size: 18px;
+}
+
+.login {
+  padding: 10px 20px;
   float: right;
-  width: 80%;
-  min-height: 60vh;
+  /* width: 80%; */
+  min-height: 56vh;
   box-sizing: border-box;
   border-radius: 8px;
   overflow: hidden;
