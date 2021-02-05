@@ -1,6 +1,6 @@
 export const lang = {
-    brandTitle: "코드 품질 관리 센터",
-    brandEng: "Code Quality Management Center",
+    brandTitle: "代码质量管理中心",
+    brandEng: "품질 센터",
     slogan: "로그인",
     username: "계정",
     password: '암호',

@@ -7,30 +7,32 @@
       </div>
       <div class="right clearfix">
         <div class="login">
-          <h2>{{$t('lang.slogan')}}</h2>
+          <div class="current-box">
+            <h2>{{$t('lang.slogan')}}</h2>
 
-          <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link">
-              {{currentLang}}<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="zh">中文</el-dropdown-item>
-              <el-dropdown-item command="en">English</el-dropdown-item>
-              <el-dropdown-item command="kr">한국어</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+            <el-dropdown @command="handleCommand">
+              <span class="el-dropdown-link">
+                {{currentLang}}<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="zh">中文</el-dropdown-item>
+                <el-dropdown-item command="en">English</el-dropdown-item>
+                <el-dropdown-item command="kr">한국어</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
 
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="70px" class="demo-ruleForm">
-            <el-form-item :label="$t('lang.username')" prop="username">
-              <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('lang.password')" prop="pass">
-              <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">{{$t('lang.loginSubimt')}}</el-button>
-            </el-form-item>
-          </el-form>
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="70px" class="demo-ruleForm">
+              <el-form-item :label="$t('lang.username')" prop="username">
+                <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('lang.password')" prop="pass">
+                <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')">{{$t('lang.loginSubimt')}}</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
         </div>
       </div>
     </div>
@@ -68,7 +70,7 @@ export default {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
-        let passFlag = /^[0-9a-zA-Z]{8,16}$/.test(value)
+        let passFlag = /^[0-9a-zA-Z]{6,16}$/.test(value)
         passFlag ? callback() : callback(new Error('密码输入有误，请重试'));
 
       }
@@ -78,8 +80,12 @@ export default {
         if (valid) {
           alert('submit!');
         } else {
-          console.log('error submit!!');
-          return false;
+          this.$notify.error({
+            title: '错误 [ 20324 ]',
+            message: '用户信息校验未通过，请重新输入信息',
+            showClose: false
+          });
+
         }
       });
     },
@@ -119,24 +125,26 @@ export default {
   background: #fff;
   box-sizing: border-box;
   border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
 }
 
-.display-box > .right,
+.display-box > .right {
+  flex: 8 !important;
+}
 .display-box > .left {
-  flex: 1 !important;
+  flex: 9 !important;
 }
 
 .left {
   position: relative;
-  min-height: 56vh;
-  background: #fff;
   float: left;
   box-sizing: border-box;
   background-image: url("../assets/img/bgimg.svg");
   background-repeat: no-repeat;
-  background-size: 80%;
+  background-size: 76%;
   background-position: 70% 80%;
   user-select: none;
+  border-radius: 6px;
 }
 
 .left .desc,
@@ -146,6 +154,7 @@ export default {
   left: 10%;
   font-size: 30px;
   transform: translateY(-50%);
+  color: #000;
 }
 
 .left .desc {
@@ -154,19 +163,27 @@ export default {
 }
 
 .left .enc {
-  top: 17%;
+  top: 18%;
   font-size: 18px;
 }
 
-.login {
+.right {
   position: relative;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 10px 20px;
   float: right;
   width: 84%;
-  min-height: 56vh;
+  height: 98%;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
+  min-width: 320px;
 }
 
 .login h2 {
@@ -175,10 +192,11 @@ export default {
 
 .el-dropdown {
   position: absolute;
-  top: 7.5%;
+  top: 9%;
   right: 7%;
   cursor: pointer;
   user-select: none;
   color: #ccc;
+  outline: none;
 }
 </style>
