@@ -1,37 +1,20 @@
-# backcontrol
+# bugControl项目依赖
 
-## Project setup
-```
-npm install
-```
+## element UI 框架
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+element UI ：https://element.eleme.cn/#/zh-CN/component/installation
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## axios 接口请求
 
-### Lints and fixes files
-```
-npm run lint
-```
+axios：http://www.axios-js.com/docs/vue-axios.html
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## dayjs日期处理插件
 
-# bugControl
+dayjs 日期处理插件 ： https://dayjs.fenxianglu.cn/category/#typescript
 
 
 
 
 
-项目依赖安装 
 
-axios
-
-element UI
 

@@ -130,8 +130,8 @@ export default {
   box-sizing: border-box;
   background-image: url("../assets/img/bgimg.svg");
   background-repeat: no-repeat;
-  background-size: 88%;
-  background-position: 50px 90px;
+  background-size: 80%;
+  background-position: 70% 80%;
 }
 
 .left .desc,
