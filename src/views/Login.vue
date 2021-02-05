@@ -4,17 +4,16 @@
       <div class="left">
         <div class="desc">代码质量管理中心</div>
         <div class="enc">Quality Center</div>
-
       </div>
       <div class="right clearfix">
-        <div class="login" v-if="displayBox">
+        <div class="login">
           <h2>登录</h2>
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="60px" class="demo-ruleForm">
-            <el-form-item label="用户名" prop="pass">
-              <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+            <el-form-item label="用户名" prop="username">
+              <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="checkPass">
-              <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+            <el-form-item label="密码" prop="pass">
+              <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -30,73 +29,56 @@
 <script>
 export default {
   data() {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("年龄不能为空"));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字值"));
-        } else {
-          if (value < 18) {
-            callback(new Error("必须年满18岁"));
-          } else {
-            callback();
-          }
-        }
-      }, 1000);
-    };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
     return {
-      displayBox: true,
       ruleForm: {
-        pass: "",
-        checkPass: "",
-        age: "",
+        username: '',
+        pass: '',
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        age: [{ validator: checkAge, trigger: "blur" }],
-      },
+        username: [{ validator: this.validateUser, trigger: 'blur' }],
+        pass: [{ validator: this.validatePass, trigger: 'blur' }],
+      }
     };
   },
   methods: {
+    validateUser(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('请输入用户名'));
+      } else {
+        // 对邮箱进行验证只允许邮箱进行登录
+        let countFlag = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value)
+        countFlag ? callback() : callback(new Error('用户名非法，请输入邮箱用户名'));
+      }
+    },
+    validatePass(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        let passFlag = /^[0-9a-zA-Z]{8,16}$/.test(value)
+        passFlag ? callback() : callback(new Error('密码输入有误，请重试'));
+
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          alert('submit!');
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
     },
-  },
-};
+  }
+}
 </script>
 
 
 
 <style scoped>
+.el-form-item {
+  margin-bottom: 26px;
+}
 .container {
   display: flex;
   justify-content: center;
@@ -110,8 +92,10 @@ export default {
 .display-box {
   display: flex;
   padding: 20px;
-  min-width: 50vw;
-  min-height: 56vh;
+  width: 50%;
+  min-width: 700px;
+  height: 60vh;
+  min-height: 300px;
   background: #fff;
   box-sizing: border-box;
   border-radius: 8px;
@@ -156,10 +140,14 @@ export default {
 .login {
   padding: 10px 20px;
   float: right;
-  /* width: 80%; */
+  width: 84%;
   min-height: 56vh;
   box-sizing: border-box;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.login h2 {
+  padding-bottom: 40px;
 }
 </style>
