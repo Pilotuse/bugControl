@@ -1,17 +1,19 @@
 import axios from "axios";
-
-
-
 // 全局拦截器，这个文件不要动！！！！
 
-//配置全局的拦截器
+// 配置全局的拦截器
 axios.interceptors.request.use(config => {
-    let token = JSON.parse(localStorage.getItem('users')).token || ''
-    if (token) config.headers.common["token"] = token
+    if (localStorage.getItem('users')) {
+        let token = JSON.parse(localStorage.getItem("users")).token
+        config.headers.common["authorization"] = token
+    }
     return config;
 }, error => {
+    console.log(error);
     return Promise.reject(error);
 });
+
+
 
 //响应头拦截
 axios.interceptors.response.use(response => {
@@ -33,4 +35,4 @@ axios.interceptors.response.use(response => {
 });
 
 export default axios;
-//default  的东西  别人使用的时候  可以随便取名字
+// //default  的东西  别人使用的时候  可以随便取名字
