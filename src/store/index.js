@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import login from './module/login'
+import loginModule from '../module/loginModule'
 
 Vue.use(Vuex)
 
@@ -10,8 +10,9 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
+    login(context, info) {
+      loginModule.login(info).then(res => info.callback(res.data))
+    }
   },
-  modules: {
-    login
-  }
+  modules: {}
 })
