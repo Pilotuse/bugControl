@@ -12,6 +12,9 @@ export default new Vuex.Store({
   actions: {
     login(context, info) {
       loginModule.login(info).then(res => info.callback(res.data))
+    },
+    loginout(context, info) {
+      loginModule.loginout().then(res => info.callback(res.data))
     }
   },
   modules: {}
