@@ -10,11 +10,8 @@ export default {
     methods: {
         ...mapActions(["loginout"]),
         async beforeunloadFn() {
-            await this.loginout(data => {
-              console.log(data);
-            })
-            localStorage.removeItem('users')
-            
+            // await this.loginout(data =>  console.log(data))
+            // localStorage.removeItem('users')   
         }
 
     },
