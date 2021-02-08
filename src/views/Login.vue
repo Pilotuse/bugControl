@@ -41,7 +41,7 @@
 
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -109,6 +109,12 @@ export default {
       this.currentLang = command == 'zh' ? '中文' : command == 'en' ? 'English' : '한국어'
       this.$i18n.locale = command == 'zh' ? 'zh' : command == 'en' ? 'en' : 'kr'
     }
+  },
+  computed: {
+    ...mapState(["navbarStatus"])
+  },
+  created() {
+    this.navbarStatus = false
   }
 }
 </script>
