@@ -31,7 +31,7 @@
             <i class="iconfont icon-user"></i>
             <span slot="title">成员</span>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="7">
             <i class="iconfont icon-cogs"></i>
             <span slot="title">设置</span>
           </el-menu-item>
