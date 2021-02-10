@@ -1,7 +1,7 @@
 <template>
   <div class="headers-list clearfix">
     <div class="left">
-      <div class="brand">BUG-Control 代码质量控制</div>
+      <div class="brand">BUG-Control 代码质量与版本控制中心</div>
     </div>
     <div class="right">
       <div><i class="iconfont icon-alarm"></i></div>
@@ -18,12 +18,14 @@
   left: 0;
   z-index: 666;
   width: 100vw;
+  min-width: 800px;
   height: 46px;
   background: #303643 !important;
 }
 
 .left {
   float: left;
+  margin-left: 10px;
 }
 
 .left > div,
@@ -32,12 +34,19 @@
   color: #fff;
   height: 100%;
   line-height: 46px;
+  vertical-align: bottom;
 }
 
 .left .brand {
-  padding-left: 26px;
+  padding-left: 10px;
   font-size: 18px;
   line-height: 46px;
+}
+
+.left i {
+  font-size: 26px;
+  color: #8c92a4;
+  color: #ffd04b;
 }
 
 .right {
