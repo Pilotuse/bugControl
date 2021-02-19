@@ -9,27 +9,29 @@
 
 <script>
 // @ is an alias to /src
-import headers from '../components/home/Header'
-import navbar from '../components/home/NavbarSelector'
-import admin from '../components/home/Admin'
+import headers from "../components/home/Header";
+import navbar from "../components/home/NavbarSelector";
+import admin from "../components/home/Admin";
+import tester from "../components/home/Tester";
 
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
-      component: 'admin'
-    }
+      component: "tester",
+    };
   },
   components: {
     headers,
     navbar,
-    admin
+    admin,
+    tester,
   },
   created() {
     // 请求用户查询
     console.log(this.$route.params.role);
-  }
-}
+  },
+};
 </script>
 
 
