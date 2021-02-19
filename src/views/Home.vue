@@ -13,7 +13,7 @@
 
 
 // @ is an alias to /src
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import headers from '../components/home/Header'
 import navbar from '../components/home/NavbarSelector'
 import dashboard from '../components/home/Dashboard'
@@ -27,7 +27,7 @@ import microChat from '../components/home/MicroChat'
 
 export default {
     name: 'Home',
-    computed:{
+    computed: {
         ...mapState(["showModule"])
     },
     components: {
@@ -55,14 +55,13 @@ export default {
     position: absolute;
     top: 46px;
     left: 59px;
-    padding: 10px 20px;
     width: calc(100% - 59px);
     height: calc(100% - 46px);
     overflow: scroll;
     box-sizing: border-box;
 }
 
-.context > div {
+/* .context > div {
     width: 100%;
-}
+} */
 </style>
