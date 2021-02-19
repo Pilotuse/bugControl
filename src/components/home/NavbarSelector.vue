@@ -2,8 +2,15 @@
   <div>
     <el-row class="tac">
       <el-col :span="2">
-        <el-menu default-active="dashboard" class="el-menu-vertical-demo" @select="handleSelect" background-color="#545C64" text-color="#fff" active-text-color="#ffd04b">
-          <el-menu-item index="dashboard" >
+        <el-menu
+          default-active="dashboard"
+          class="el-menu-vertical-demo"
+          @select="handleSelect"
+          background-color="#545C64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-menu-item index="dashboard">
             <i class="iconfont icon-dashboard"></i>
             <span slot="title">工作台</span>
           </el-menu-item>
@@ -12,7 +19,7 @@
             <span slot="title">项目</span>
           </el-menu-item>
           <el-menu-item index="version">
-            <i class="iconfont  icon-git"></i>
+            <i class="iconfont icon-git"></i>
             <span slot="title">版本</span>
           </el-menu-item>
           <el-menu-item index="task">
@@ -43,27 +50,25 @@
 
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations } from "vuex";
 export default {
   // 查询用户返回当前的权限是否满足路由跳转后对应的角色
   data() {
-    return {
-
-    }
+    return {};
   },
   methods: {
-    ...mapMutations(["getUserRole","changeShowModule"]),
+    ...mapMutations(["getUserRole", "changeShowModule"]),
     getUserRole() {
       console.log(111);
     },
     handleSelect(index) {
-      this.changeShowModule(index)
-     },
+      this.changeShowModule(index);
+    },
   },
   created() {
-    this.getUserRole()
-  }
-}
+    this.getUserRole();
+  },
+};
 </script>
 
 
@@ -110,5 +115,4 @@ export default {
   text-align: center;
   font-size: 12px;
 }
-
 </style>
