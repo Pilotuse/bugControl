@@ -4,7 +4,7 @@
         <!-- 侧边栏组件 -->
         <navbar></navbar>
         <div class="context">
-             <component :is="component" class="type-box"></component>
+            <component :is="showModule" class="type-box"></component>
         </div>
     </div>
 </template>
@@ -13,21 +13,34 @@
 
 
 // @ is an alias to /src
+import {mapState} from 'vuex'
 import headers from '../components/home/Header'
 import navbar from '../components/home/NavbarSelector'
-import admin from '../components/home/Admin'
+import dashboard from '../components/home/Dashboard'
+import project from '../components/home/Project'
+import version from '../components/home/Version'
+import task from '../components/home/Task'
+import document from '../components/home/Document'
+import statistics from '../components/home/Statistics'
+import member from '../components/home/Member'
+import microChat from '../components/home/MicroChat'
 
 export default {
     name: 'Home',
-    data() {
-        return {
-            component: 'admin'
-        }
+    computed:{
+        ...mapState(["showModule"])
     },
     components: {
         headers,
         navbar,
-        admin
+        dashboard,
+        project,
+        version,
+        task,
+        document,
+        statistics,
+        member,
+        microChat
     },
     created() {
         // 请求用户查询
@@ -42,15 +55,14 @@ export default {
     position: absolute;
     top: 46px;
     left: 59px;
-    padding:  10px 20px;
+    padding: 10px 20px;
     width: calc(100% - 59px);
     height: calc(100% - 46px);
     overflow: scroll;
-    background: #ccc;
     box-sizing: border-box;
 }
 
-.context> div {
-  width: 100%;
+.context > div {
+    width: 100%;
 }
 </style>

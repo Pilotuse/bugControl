@@ -2,40 +2,39 @@
   <div>
     <el-row class="tac">
       <el-col :span="2">
-        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#F7F7F7" text-color="#fff" active-text-color="#ffd04b">
-          <el-menu-item index="1">
+        <el-menu default-active="dashboard" class="el-menu-vertical-demo" @select="handleSelect" background-color="#F7F7F7" text-color="#fff" active-text-color="#ffd04b">
+          <el-menu-item index="dashboard" >
             <i class="iconfont icon-dashboard"></i>
             <span slot="title">工作台</span>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="project">
             <i class="iconfont icon-slack"></i>
             <span slot="title">项目</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="version">
             <i class="iconfont  icon-git"></i>
             <span slot="title">版本</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="task">
             <i class="iconfont icon-trello"></i>
             <span slot="title">任务</span>
           </el-menu-item>
-          <el-menu-item index="5">
+          <el-menu-item index="document">
             <i class="iconfont icon-bookmark"></i>
             <span slot="title">文档</span>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="statistics">
             <i class="iconfont icon-stats-up"></i>
             <span slot="title">统计</span>
           </el-menu-item>
-          <el-menu-item index="7">
+          <el-menu-item index="member">
             <i class="iconfont icon-user"></i>
             <span slot="title">成员</span>
           </el-menu-item>
-          <el-menu-item index="8">
+          <el-menu-item index="microChat">
             <i class="iconfont icon-island"></i>
             <span slot="title">微聊</span>
           </el-menu-item>
-
         </el-menu>
       </el-col>
     </el-row>
@@ -53,12 +52,13 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["getUserRole"]),
+    ...mapMutations(["getUserRole","changeShowModule"]),
     getUserRole() {
       console.log(111);
     },
-    handleOpen() { },
-    handleClose() { }
+    handleSelect(index) {
+      this.changeShowModule(index)
+     },
   },
   created() {
     this.getUserRole()
@@ -74,6 +74,7 @@ export default {
   box-sizing: border-box;
   height: 100vh;
   width: 60px;
+  user-select: none;
 }
 
 .el-submenu__icon-arrow {

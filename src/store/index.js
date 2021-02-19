@@ -7,11 +7,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loginUserType: ''
+    loginUserType: '',
+    showModule:'dashboard'
   },
   mutations: {
     changeUserType(state, playload) {
       state.loginUserType = playload
+    },
+    changeShowModule(state,playload){
+      state.showModule = playload
     }
   },
   actions: {
