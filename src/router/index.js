@@ -9,6 +9,15 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'root',
+    redirect: { path: '/login' },
+    meta: {
+      title: 'Quality Center-首页',
+      isLogin: true
+    }
+  },
+  {
+    path: '/home/:role',
     name: 'Home',
     component: Home,
     meta: {
@@ -26,7 +35,7 @@ const routes = [
   },
   {
     path: '/404',
-    name: '404',
+    name: 'notfound',
     component: () => import('../views/404.vue'),
     meta: {
       title: 'Quality Center-404'
@@ -56,7 +65,10 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
   if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
