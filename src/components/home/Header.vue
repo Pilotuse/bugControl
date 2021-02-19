@@ -54,9 +54,13 @@
   height: 100%;
 }
 
+.right i {
+  cursor: pointer;
+}
+
 .iconfont {
-  font-size: 20px;
-  color: #8c92a4;
+  font-size: 14px;
+  color: #fff;
 }
 
 .right > div {

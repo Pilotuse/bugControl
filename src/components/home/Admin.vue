@@ -16,9 +16,5 @@ export default {
 
 
 <style scoped>
-.admin {
-  height: 2000px;
-  background: #ccc;
-  width: 96%;
-}
+
 </style>

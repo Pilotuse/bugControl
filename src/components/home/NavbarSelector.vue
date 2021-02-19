@@ -69,6 +69,7 @@ export default {
 
 <style scoped>
 .el-menu-vertical-demo.el-menu {
+  position: fixed;
   padding-top: 46px;
   box-sizing: border-box;
   height: 100vh;
