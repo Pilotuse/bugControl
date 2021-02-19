@@ -24,15 +24,6 @@ export default {
     },
     destroyed() {
         window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
-    },
-    mounted() {
-        window.addEventListener('beforeunload', e => {
-            this.beforeunloadFn(e)
-            return alert('确认退出')
-        })
-    },
-    destroyed() {
-        window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
     }
 }
 </script>
