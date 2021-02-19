@@ -8,15 +8,12 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 
 
-=======
 // @ is an alias to /src
 import headers from '../components/home/Header'
 import navbar from '../components/home/NavbarSelector'
 import admin from '../components/home/Admin'
->>>>>>> main
 
 export default {
   name: 'Home',
