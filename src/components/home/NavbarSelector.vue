@@ -23,17 +23,17 @@
             <i class="iconfont icon-bookmark"></i>
             <span slot="title">文档</span>
           </el-menu-item>
-          <el-menu-item index="7">
+          <el-menu-item index="6">
             <i class="iconfont icon-stats-up"></i>
             <span slot="title">统计</span>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="7">
             <i class="iconfont icon-user"></i>
             <span slot="title">成员</span>
           </el-menu-item>
-          <el-menu-item index="7">
-            <i class="iconfont icon-cogs"></i>
-            <span slot="title">设置</span>
+          <el-menu-item index="8">
+            <i class="iconfont icon-island"></i>
+            <span slot="title">微聊</span>
           </el-menu-item>
 
         </el-menu>
@@ -41,6 +41,30 @@
     </el-row>
   </div>
 </template>
+
+
+<script>
+import { mapMutations } from 'vuex'
+export default {
+  // 查询用户返回当前的权限是否满足路由跳转后对应的角色
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    ...mapMutations(["getUserRole"]),
+    getUserRole() {
+      console.log(111);
+    },
+    handleOpen() { },
+    handleClose() { }
+  },
+  created() {
+    this.getUserRole()
+  }
+}
+</script>
 
 
 <style scoped>

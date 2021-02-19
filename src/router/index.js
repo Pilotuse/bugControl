@@ -9,6 +9,15 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'root',
+    redirect: { path: '/home' },
+    meta: {
+      title: 'Quality Center-首页',
+      isLogin: true
+    }
+  },
+  {
+    path: '/home/:role',
     name: 'Home',
     component: Home,
     meta: {

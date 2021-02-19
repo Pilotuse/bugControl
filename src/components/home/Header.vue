@@ -1,7 +1,7 @@
 <template>
   <div class="headers-list clearfix">
     <div class="left">
-      <div class="brand">BUG-Control 代码质量与版本控制中心</div>
+      <div class="brand">代码质量与版本控制中心</div>
     </div>
     <div class="right">
       <div><i class="iconfont icon-alarm"></i></div>
