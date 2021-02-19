@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Message } from 'element-ui'
+import router from '../router'
 // 全局拦截器，这个文件不要动！！！！
 
 // 配置loading动画

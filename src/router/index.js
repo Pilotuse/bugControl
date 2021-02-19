@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'root',
-    redirect: { path: '/home' },
+    redirect: { path: '/login' },
     meta: {
       title: 'Quality Center-首页',
       isLogin: true
