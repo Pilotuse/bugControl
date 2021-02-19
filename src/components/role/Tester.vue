@@ -212,7 +212,7 @@ export default {
 </script>
 <style scoped>
 .body {
-  height: 700px;
+  height: 100%;
   background-color: #f1f1f1;
   position: relative;
 }
