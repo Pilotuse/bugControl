@@ -44,7 +44,7 @@ export default {
     },
     created() {
         // 请求用户查询
-        console.log(this.$route.params.role);
+
     }
 }
 </script>
