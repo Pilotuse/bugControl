@@ -361,3 +361,16 @@ template {
   display: none;
   /* Chrome Safari */
 }
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.el-badge__content.is-fixed.is-dot {
+  top: 12px ;
+}

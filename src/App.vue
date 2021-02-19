@@ -1,50 +1,55 @@
 <template>
-  <div id="app">
+    <div id="app">
 
-    <router-view />
-  </div>
+        <router-view />
+    </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 export default {
-  methods: {
-    ...mapActions(["loginout"]),
-    async beforeunloadFn() {
-      //   await this.loginout(data => data)
-      //   localStorage.removeItem('users')
+    methods: {
+        ...mapActions(["loginout"]),
+        async beforeunloadFn() {
+            // await this.loginout(data =>  console.log(data))
+            // localStorage.removeItem('users')   
+        }
+
+    },
+    mounted() {
+        window.addEventListener('beforeunload', e => {
+            this.beforeunloadFn(e)
+            return alert('确认退出')
+        })
+    },
+    destroyed() {
+        window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
     }
-  },
-  mounted() {
-    window.addEventListener('beforeunload', e => {
-      this.beforeunloadFn(e)
-      return alert('确认退出')
-    })
-  },
-  destroyed() {
-    window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
-  }
 }
 </script>
 
 <style lang="scss">
+html,body {
+  width: 100vw;
+  min-height: 100vh;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
 }
 
 #nav {
-  padding: 30px;
+    padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    a {
+        font-weight: bold;
+        color: #2c3e50;
 
-    &.router-link-exact-active {
-      color: #42b983;
+        &.router-link-exact-active {
+            color: #42b983;
+        }
     }
-  }
 }
 </style>
