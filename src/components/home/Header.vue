@@ -4,7 +4,9 @@
             <div class="brand">代码质量与版本控制中心</div>
         </div>
         <div class="right">
-            <div><i class="iconfont icon-alarm"></i></div>
+            <div>
+                <el-badge is-dot class="item"> <i class="iconfont icon-alarm"></i></el-badge>
+            </div>
             <div><i class="iconfont icon-plus"></i></div>
             <div class="role">下海</div>
         </div>
@@ -20,7 +22,7 @@
     width: 100vw;
     min-width: 800px;
     height: 46px;
-    background: #303643 !important;
+    background: #2c3e50 !important;
 }
 
 .left {
@@ -62,8 +64,8 @@
 .right .role {
     margin-bottom: 3px;
     border-radius: 50%;
-    background: #fff;
-    color: #000;
+    background: #545C64;
+    color: #f1f1f1;
     text-align: center;
     font-size: 14px;
     line-height: 40px;
@@ -71,6 +73,7 @@
     height: 40px;
     cursor: pointer;
     user-select: none;
+    box-shadow: 0 0 2px 1px #ccc;
 }
 
 .iconfont {
@@ -81,4 +84,6 @@
 .right > div {
     margin: 0 8px;
 }
+
+
 </style>

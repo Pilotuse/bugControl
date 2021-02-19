@@ -2,7 +2,7 @@
   <div>
     <el-row class="tac">
       <el-col :span="2">
-        <el-menu default-active="dashboard" class="el-menu-vertical-demo" @select="handleSelect" background-color="#F7F7F7" text-color="#fff" active-text-color="#ffd04b">
+        <el-menu default-active="dashboard" class="el-menu-vertical-demo" @select="handleSelect" background-color="#545C64" text-color="#fff" active-text-color="#ffd04b">
           <el-menu-item index="dashboard" >
             <i class="iconfont icon-dashboard"></i>
             <span slot="title">工作台</span>
@@ -108,7 +108,7 @@ export default {
   display: block;
   width: 100%;
   text-align: center;
-  color: #40485b;
   font-size: 12px;
 }
+
 </style>
