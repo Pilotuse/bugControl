@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="contexts">
         <online></online>
-        <div class="content clearfix">
+        <div class="contents clearfix">
             <contact class="contact"></contact>
             <chartbox class="chartbox"></chartbox>
             <membership></membership>
@@ -46,17 +46,21 @@ export default {
 
 
 <style scoped>
-.content {
+.contexts{
+    padding: 10px 20px;
+}
+
+.contents {
     display: flex;
 }
 
-.content > div:first-child,
-.content > div:nth-child(2) {
+.contents > div:first-child,
+.contents > div:nth-child(2) {
     flex: 4;
     margin-right: 20px;
 }
 
-.content > div:last-child {
+.contents > div:last-child {
     flex: 2;
 }
 

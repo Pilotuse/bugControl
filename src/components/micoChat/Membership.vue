@@ -13,7 +13,6 @@
             <el-carousel height="100%">
                 <el-carousel-item v-for="item in imgSrc" :key="item.id">
                     <img :src="require(`../../assets/img/${item.src}.svg`)">
-                    {{item.desc}}
                 </el-carousel-item>
             </el-carousel>
         </div>
@@ -40,7 +39,7 @@ export default {
     padding: 10px;
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.4);
     border-radius: 8px;
-    height: 40vh;
+   height: 52vh;
     overflow: scroll;
 }
 
@@ -50,9 +49,11 @@ export default {
 
 .swiper {
     margin-top: 20px;
+    padding: 20px;
+    box-sizing: border-box;
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.4);
     border-radius: 8px;
-    height: 38vh;
+    height: 26vh;
     overflow: hidden;
 }
 
@@ -61,6 +62,6 @@ export default {
 }
 
 .swiper img {
-    height: 100%;
+    width: 100%;
 }
 </style>
