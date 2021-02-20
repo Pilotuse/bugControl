@@ -25,11 +25,10 @@
               </el-image>
             </span>
           </template>
-        </el-table-column>
-
-        <el-table-column fixed="right" label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" v-if="scope.row.type == 1"
+    </el-table-column> -->
+      <el-table-column fixed="right" label="操作" width="180">
+        <template slot-scope="scope">
+          <el-button type="primary" v-if="scope.row.type == 1"
               >待修复</el-button
             >
             <el-button type="success" v-else-if="scope.row.type == 2"
