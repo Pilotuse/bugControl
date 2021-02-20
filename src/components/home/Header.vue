@@ -22,7 +22,8 @@
     width: 100vw;
     min-width: 800px;
     height: 46px;
-    background: #2c3e50 !important;
+    z-index: 9999;
+    background: #303643 !important;
 }
 
 .left {

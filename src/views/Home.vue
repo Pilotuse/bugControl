@@ -52,8 +52,8 @@ export default {
     top: 46px;
     left: 0;
     width: 60px;
-    height: calc(100vh - 46px);
-    background: #545c64;
+    height: 100%;
+    background: #F7F7F7;
 }
 
 .navbar a {
@@ -61,7 +61,7 @@ export default {
     height: 80px;
     display: flex;
     flex-direction: column;
-    color: #fff;
+    color: #40485B;
     text-decoration: none;
     text-align: center;
 }
@@ -70,7 +70,7 @@ export default {
     padding: 10px 0;
     font-size: 20px;
     width: 100%;
-    color: #ccc;
+    color: #40485B;
 }
 
 .navbar a div {
@@ -87,14 +87,14 @@ export default {
 }
 
 .router-link-exact-active.router-link-active {
-    color: #ffd04b !important;
+    color: #FF8F00 !important;
 
     i {
-        color: #ffd04b !important;
+        color: #FF8F00 !important;
     }
 
     div {
-        color: #ffd04b !important;
+        color: #FF8F00 !important;
     }
 }
 </style>
