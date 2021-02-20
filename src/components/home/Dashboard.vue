@@ -53,6 +53,13 @@ export default {
         var myChart = echarts.init(document.getElementById("myecharts"));
         var option = {
             color: ["#BA98FF"],
+            grid: {
+                x: 25,
+                y: 45,
+                x2: 5,
+                y2: 20,
+                borderWidth: 1
+            },
             xAxis: {
                 type: "category",
                 show: false
@@ -127,6 +134,7 @@ export default {
 
 .box-card {
     width: 350px !important;
+    height: 200px !important;
     background: #e3f4ff;
     border: 1px solid #c2daeb;
     color: #005980;
