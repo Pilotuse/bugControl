@@ -8,7 +8,7 @@
         </div>
         <div class="invention clearfix">
             <div class="left"><i class="iconfont icon-invention"></i> 严禁发送用户数据和非法信息，所有聊天均进行云端数据保存，请知悉！ </div>
-            <div class="right">{{timer}}</div>
+            <div class="right">{{timerValue}}</div>
         </div>
     </div>
 </template>
@@ -23,16 +23,17 @@ import membership from '../micoChat/Membership'
 export default {
     data() {
         return {
+            timerValue: '',
             timer: ''
         }
     },
     methods: {
         clock() {
-            setInterval(() =>  this.timer = this.dayjs().format('YYYY-MM-DD HH:mm:ss'), 1000)
-            console.log(this.timer);
+            if (this.timer) clearInterval(this.timer)
+            this.timer = setInterval(() => this.timerValue = this.dayjs().format('YYYY-MM-DD HH:mm:ss'), 1000)
         }
     },
-    mounted(){
+    mounted() {
         this.clock()
     },
     components: {
@@ -46,8 +47,9 @@ export default {
 
 
 <style scoped>
-.contexts{
+.contexts {
     padding: 10px 20px;
+    box-sizing: border-box;
 }
 
 .contents {
