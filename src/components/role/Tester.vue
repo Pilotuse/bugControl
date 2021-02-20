@@ -3,14 +3,14 @@
     <el-row>
       <el-col :span="24" class="header">
         <h2>任务</h2>
-        <el-button type="primary">新建任务</el-button>
+        <el-button type="primary" @click="showtask">新建任务</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="10" class="search">
         <el-select v-model="value1" multiple placeholder="排序方式">
           <el-option
-            v-for="item in options"
+            v-for="item in options1"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -25,7 +25,7 @@
           placeholder="标签"
         >
           <el-option
-            v-for="item in options"
+            v-for="item in options2"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -48,14 +48,16 @@
         <p style="margin-left: 20px">共有{{}}个任务</p>
       </el-col>
     </el-row>
-    <el-row v-for="items in taskall" :key="items" class="task">
+    <el-row v-for="items in library" :key="items" class="task">
       <el-col :span="1"><el-checkbox v-model="checked"></el-checkbox></el-col>
-      <el-col :span="2">任务编号</el-col>
-      <el-col :span="4">任务名称</el-col>
-      <el-col :span="5">任务描述</el-col>
-      <el-col :span="2">重要</el-col>
-      <el-col :span="6">任务标签</el-col>
-      <el-col :span="4"
+      <el-col :span="2">{{ items.tasknumber }}</el-col>
+      <el-col :span="4">{{ items.taskname }}</el-col>
+      <el-col :span="5">{{ items.taskdetails }}</el-col>
+      <el-col :span="2">{{ items.Degree }}</el-col>
+      <el-col :span="5">{{ items.tasklabel }}</el-col>
+      <el-col :span="2">{{ items.taskperson }}</el-col>
+      <el-col :span="2">{{ items.tasktime }}</el-col>
+      <el-col :span="2"
         ><el-button
           type="success"
           icon="el-icon-message"
@@ -70,7 +72,7 @@
         ></el-button
       ></el-col>
     </el-row>
-    <div class="establishall">
+    <div class="establishall" v-show="flagtask">
       <div class="establish">
         <el-page-header @back="goBack" content="任务创建" title="">
         </el-page-header>
@@ -84,7 +86,7 @@
           <el-form-item label="任务名称" prop="name">
             <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
-          <el-form-item label="指派负责人" prop="region">
+          <el-form-item label="指派负责人" prop="region" class="person">
             <el-select v-model="ruleForm.region" placeholder="请选择开发人员">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
@@ -101,7 +103,7 @@
                 ></el-date-picker>
               </el-form-item>
             </el-col>
-            <el-col class="line" :span="2">-</el-col>
+            <!-- <el-col class="line" :span="2">-</el-col>
             <el-col :span="11">
               <el-form-item prop="date2">
                 <el-time-picker
@@ -110,7 +112,7 @@
                   style="width: 100%"
                 ></el-time-picker>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-form-item>
           <el-form-item label="标签设定" prop="type">
             <el-checkbox-group v-model="ruleForm.type">
@@ -129,7 +131,27 @@
           <el-form-item label="任务详情" prop="desc">
             <el-input type="textarea" v-model="ruleForm.desc"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-upload
+            class="upload-demo"
+            action="/api/uploads"
+            name="filename"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-remove="beforeRemove"
+            multiple
+            :on-exceed="handleExceed"
+            :file-list="fileList"
+            :auto-upload="false"
+            ref="upload"
+            :on-success="success"
+            :on-change="change"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb
+            </div>
+          </el-upload>
+          <el-form-item class="right">
             <el-button type="primary" @click="submitForm('ruleForm')"
               >立即创建</el-button
             >
@@ -144,7 +166,55 @@
 export default {
   data() {
     return {
-      taskall: [1, 2, 3],
+      options1: [
+        {
+          value: "选项1",
+          label: "重要程度",
+        },
+        {
+          value: "选项2",
+          label: "到期时间",
+        },
+      ],
+      options2: [
+        {
+          value: "选项1",
+          label: "bug",
+        },
+        {
+          value: "选项2",
+          label: "需求",
+        },
+        {
+          value: "选项2",
+          label: "样式",
+        },
+        {
+          value: "选项2",
+          label: "兼容",
+        },
+      ],
+      library: [
+        {
+          tasknumber: "#abc",
+          taskname: "淘宝bug",
+          taskdetails: "解决bug",
+          Degree: "重要",
+          tasklabel: "bug",
+          taskperson: "小王",
+          tasktime: "2月25日",
+        },
+        {
+          tasknumber: "#zxc",
+          taskname: "天猫bug",
+          taskdetails: "解决bug",
+          Degree: "重要",
+          tasklabel: "样式",
+          taskperson: "小王",
+          tasktime: "2月26日",
+        },
+      ],
+      flagtask: false,
       ruleForm: {
         name: "",
         region: "",
@@ -207,6 +277,12 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    goBack() {
+      this.flagtask = false;
+    },
+    showtask() {
+      this.flagtask = true;
+    },
   },
 };
 </script>
@@ -215,6 +291,15 @@ export default {
   height: 100%;
   background-color: #f1f1f1;
   position: relative;
+}
+.upload-demo {
+  float: left;
+  margin: auto;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.right {
+  float: right;
 }
 .establishall {
   width: 100%;
@@ -229,7 +314,7 @@ export default {
   height: 500px;
   background-color: #fff;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 50px;
   padding: 0 20px;
 }
 .el-page-header {
