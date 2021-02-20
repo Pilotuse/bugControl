@@ -78,20 +78,17 @@ export default {
             }
         },
         submitForm(formName) {
+            localStorage.removeItem('users')
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     let that = this
                     this.login({
                         username: this.ruleForm.username, password: this.ruleForm.pass, callback(data) {
-                            let { status, msg, token, author } = data.params.result
+                            let { status, msg, token, author,username } = data.params.result
                             if (status == '0000') {
-                                localStorage.removeItem('users')
-                                console.log(111);
-                                localStorage.setItem('users', JSON.stringify({ date: new Date(), token, author }))
-                                console.log(that);
+                                localStorage.setItem('users', JSON.stringify({ date: new Date(), token, author,username }))
                                 // 将数据存在vuex中,然后取拉取该用户的菜单权限，可以单独配置菜单
                                 that.$router.push({ path: '/home/dashboard' });
-                                console.log(222);
                             } else {
                                 that.$notify.error({
                                     title: `错误[${status} ]`,
@@ -114,7 +111,7 @@ export default {
         handleCommand(command) {
             this.currentLang = command == 'zh' ? '中文' : command == 'en' ? 'English' : '한국어'
             this.$i18n.locale = command == 'zh' ? 'zh' : command == 'en' ? 'en' : 'kr'
-        }
+        },
     }
 }
 </script>

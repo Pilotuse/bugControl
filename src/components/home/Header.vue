@@ -5,13 +5,57 @@
         </div>
         <div class="right">
             <div>
-                <el-badge is-dot class="item"> <i class="iconfont icon-alarm"></i></el-badge>
+                <el-popover placement="bottom" title="标题" width="200" trigger="click" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                    <el-badge is-dot class="item" slot="reference"> <i class="iconfont icon-alarm"></i></el-badge>
+                </el-popover>
+
             </div>
-            <div><i class="iconfont icon-plus"></i></div>
-            <div class="role">下海</div>
+            <div @click="goTask"><i class="iconfont icon-plus"></i></div>
+            <el-dropdown @command="handleCommand">
+                <span class="el-dropdown-link">
+                    {{username}}
+                    <el-tag>{{role}}</el-tag>
+                    <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item icon="el-icon-setting" command="setting"> 设置 </el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-service" command="help"> 帮助 </el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-guide" command="logout"> 退出 </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
     </div>
 </template>
+
+
+<script>
+export default {
+    data() {
+        return {
+            username: '',
+            role: ''
+        }
+    },
+    methods: {
+        goTask() {
+            this.$router.push('/home/task')
+        },
+        handleCommand(commnd) {
+            console.log(111);
+            if (commnd == 'logout') {
+                console.log(222);
+                localStorage.removeItem('users')
+                this.$router.push('/login')
+            }
+        }
+    },
+    created() {
+        let userinfo = JSON.parse(localStorage.getItem('users'))
+        this.username = userinfo.username
+        this.role = userinfo.author == "developer" ? '开发' : userinfo.author == 'admin' ? '管理员' : '测试'
+    }
+}
+</script>
 
 <style scoped>
 .headers-list {
@@ -65,7 +109,7 @@
 .right .role {
     margin-bottom: 3px;
     border-radius: 50%;
-    background: #545C64;
+    background: #545c64;
     color: #f1f1f1;
     text-align: center;
     font-size: 14px;
@@ -86,5 +130,18 @@
     margin: 0 8px;
 }
 
+.el-tag {
+    height: 20px;
+    padding: 0 2px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 2px;
+    border: none;
+    font-size: 12px;
+}
 
+.el-tag.el-tag--light {
+    background: #7f8fa6;
+    color: #dcdde1;
+}
 </style>
