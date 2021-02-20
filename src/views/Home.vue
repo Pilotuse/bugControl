@@ -1,66 +1,100 @@
 <template>
-  <div class="home">
-    <headers></headers>
-    <!-- 侧边栏组件 -->
-    <navbar></navbar>
-    <div class="context">
-      <component :is="showModule" class="type-box"></component>
+    <div class="home">
+        <headers></headers>
+        <div class="container clearfix">
+            <div class="navbar">
+                <router-link :to="item.path" v-for="item in navbar" :key="item.id">
+                    <i :class="item.icon" class="iconfont"></i>
+                    <div>{{item.describe}}</div>
+                </router-link>
+            </div>
+            <div class="context">
+                <router-view></router-view>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import {  mapState } from "vuex";
 import headers from "../components/home/Header";
-import navbar from "../components/home/NavbarSelector";
-import dashboard from "../components/home/Dashboard";
-import project from "../components/home/Project";
-import version from "../components/home/Version";
-import task from "../components/home/Task";
-import document from "../components/home/Document";
-import statistics from "../components/home/Statistics";
-import member from "../components/home/Member";
-import microChat from "../components/home/MicroChat";
-
+import { mapActions } from 'vuex'
 export default {
     name: 'Home',
-    computed: {
-        ...mapState(["showModule"])
-    },
     components: {
-        headers,
-        navbar,
-        dashboard,
-        project,
-        version,
-        task,
-        document,
-        statistics,
-        member,
-        microChat
+        headers
+    },
+    data() {
+        return {
+            navbar: [],
+            currentID:'1'
+        }
+    },
+    methods: {
+        ...mapActions(["getUserMenu"]),
+        getColorId(id){
+            console.log(id);
+        }
     },
     created() {
-        // 请求用户查询
-
+        this.getUserMenu({
+            callback: ({ params: { result: { msg } } }) => {
+                this.navbar = msg
+            }
+        })
     }
 }
 </script>
 
 
-<style scoped>
-.context {
-  position: absolute;
-  top: 46px;
-  left: 59px;
-  width: calc(100% - 59px);
-  height: calc(100% - 46px);
-  overflow: scroll;
-  box-sizing: border-box;
+<style scoped lang="scss">
+.navbar {
+    position: fixed;
+    top: 46px;
+    left: 0;
+    width: 60px;
+    height: calc(100vh - 46px);
+    background: #545c64;
 }
 
-.context > div {
-  /* width: 100%; */
-  height: 97%;
+.navbar a {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+}
+
+.navbar a i {
+    padding: 10px 0;
+    font-size: 20px;
+    width: 100%;
+    color: #ccc;
+}
+
+.navbar a div {
+    font-size: 12px;
+}
+
+.context {
+    width: calc(100% - 60px);
+    height: calc(100vh - 46px);
+    position: absolute;
+    left: 60px;
+    top: 46px;
+    box-sizing: border-box;
+}
+
+.router-link-exact-active.router-link-active {
+    color: #ffd04b !important;
+
+    i {
+        color: #ffd04b !important;
+    }
+
+    div {
+        color: #ffd04b !important;
+    }
 }
 </style>

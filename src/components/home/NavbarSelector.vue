@@ -50,17 +50,11 @@ export default {
         return {};
     },
     methods: {
-        ...mapMutations(["getUserRole", "changeShowModule"]),
-        getUserRole() {
-            console.log(111);
-        },
+        ...mapMutations(["changeShowModule"]),
         handleSelect(index) {
             this.changeShowModule(index);
         },
-    },
-    created() {
-        this.getUserRole();
-    },
+    }
 };
 </script>
 
