@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     <div class="list">
       <el-table :data="leaveList" border style="width: 100%">
         <el-table-column fixed prop="leaveReason" label="待完成">
@@ -39,17 +40,8 @@
         </el-table-column>
       </el-table>
     </div>
+=======
+    成员
+>>>>>>> 4ff81f210e1d341dc68e5bb45950b13b1d46429a
   </div>
 </template>
-<script>
-import { mapState, mapActions } from "vuex";
-
-export default {
-  computed: {
-    ...mapState(["leaveList"]),
-  },
-  methods: {
-    ...mapActions(["playload"]),
-  },
-};
-</script>
