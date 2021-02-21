@@ -6,6 +6,14 @@
         问题总数
         <p>10</p>
       </div>
+      <div class="text">
+        已完成
+        <p>1</p>
+      </div>
+      <div class="text1">
+        未完成
+        <p>9</p>
+      </div>
       <div id="myecharts1"></div>
 
       <div id="myecharts"></div>
@@ -94,7 +102,46 @@
     },
     mounted() {
       var myChart = echarts.init(document.getElementById("myecharts"));
+      var myChart1 = echarts.init(document.getElementById("myecharts1"));
+
       var option = {
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          top: "5%",
+          left: "center",
+        },
+        series: [
+          {
+            type: "pie",
+            radius: ["50%", "60%"],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: "center",
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: "30",
+                fontWeight: "bold",
+              },
+            },
+            labelLine: {
+              show: false,
+            },
+            data: [
+              { value: 9, name: "未完成" },
+
+              { value: 1, name: "已完成" },
+
+            ],
+          },
+
+        ],
+      };
+      var option1 = {
         tooltip: {
           trigger: "item",
         },
@@ -130,7 +177,7 @@
 
         ],
       };
-
+      option1 && myChart1.setOption(option1);
       option && myChart.setOption(option);
     },
   };
@@ -167,14 +214,38 @@
     border-left: 1px solid #3333;
   }
 
-  .text {
-    width: 200px;
+  #myecharts1 {
+    width: 300px;
+    height: 100%;
+    position: absolute;
+    right: 300px;
+    top: 0;
+    border-left: 1px solid #3333;
+  }
+
+  .text,
+  .text1 {
+    width: 150px;
     text-align: center;
     font-size: 20px;
+    font-weight: 600;
+    float: left;
+    margin-top: 80px;
+  }
+
+  .text1 {
+    float: left;
+
   }
 
   .text p {
     color: green;
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  .text1 p {
+    color: red;
     font-size: 30px;
     font-weight: 700;
   }
