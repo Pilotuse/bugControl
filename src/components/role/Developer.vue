@@ -20,12 +20,9 @@
     </el-card>
     <h3>任务中心</h3>
     <el-card class="box-card">
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-        :row-class-name="tableRowClassName"
-      >
+      <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="taskname" label="任务名称" width="180">
+          {{ tableData.taskname }}
         </el-table-column>
         <el-table-column prop="tasknumber" label="指派人员" width="180">
         </el-table-column>
@@ -64,48 +61,48 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      tablelist: [],
       tableData: [
         {
-          taskname: "啊啊",
-          tasknumber: "下海",
-          cutoffday: "2016-05-02",
-          taskdetail: "淘宝bug",
-          degree: "重要",
-          address: "2016-05-03",
-          attachment: "11111",
+          taskname: "",
+          tasknumber: "",
+          cutoffday: "",
+          taskdetail: "",
+          degree: "",
+          address: "",
+          attachment: "",
         },
       ],
     };
   },
-  computed: {},
   methods: {
-    ...mapActions(["tester"]),
-    getMethod() {
-      this.$refs.validate(() => {
-        this.tester({
-          callback(data) {
-            let { status } = data.params.result;
-            if (status == "0000") {
-              console.log("接口获取成功");
-            } else {
-              console.log("失败");
-            }
+    ...mapActions(["queryBugOrder", "queryUser"]),
+    queryBugInfo() {
+      let that = this;
+
+      this.queryBugOrder({
+        callback({
+          params: {
+            result: { msg },
           },
-        });
+        }) {
+          that.library = typeof msg == "object" ? msg : "";
+        },
       });
     },
-    created() {
-      this.getMethod();
-    },
-    tableRowClassName({ rowIndex }) {
-      if (rowIndex === 0) {
-        return "warning-row";
-      } else if (rowIndex === 3) {
-        return "success-row";
-      }
-      return "";
-    },
   },
+  created() {
+    this.queryBugInfo();
+  },
+  tableRowClassName({ rowIndex }) {
+    if (rowIndex === 0) {
+      return "warning-row";
+    } else if (rowIndex === 3) {
+      return "success-row";
+    }
+    return "";
+  },
+
   mounted() {
     var myChart = echarts.init(document.getElementById("myecharts"));
     var myChart1 = echarts.init(document.getElementById("myecharts1"));
