@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import loginModule from '../module/loginModule'
 import homeModule from '../module/homeModule'
+import testerModule from '../module/testerMoudule'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    tester(context, info) {
+      testerModule.tester(info).then(res => info.callback(res))
+    },
     login(context, info) {
       loginModule.login(info).then(res => info.callback(res))
     },

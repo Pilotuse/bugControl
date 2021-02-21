@@ -48,30 +48,36 @@
         <p style="margin-left: 20px">共有{{}}个任务</p>
       </el-col>
     </el-row>
-    <el-row v-for="items in library" :key="items" class="task">
-      <el-col :span="1"><el-checkbox v-model="checked"></el-checkbox></el-col>
-      <el-col :span="2">{{ items.tasknumber }}</el-col>
-      <el-col :span="4">{{ items.taskname }}</el-col>
-      <el-col :span="5">{{ items.taskdetails }}</el-col>
-      <el-col :span="2">{{ items.Degree }}</el-col>
-      <el-col :span="5">{{ items.tasklabel }}</el-col>
-      <el-col :span="2">{{ items.taskperson }}</el-col>
-      <el-col :span="2">{{ items.tasktime }}</el-col>
-      <el-col :span="2"
-        ><el-button
-          type="success"
-          icon="el-icon-message"
-          circle
-          size="small"
-        ></el-button
-        ><el-button
-          type="danger"
-          icon="el-icon-delete"
-          circle
-          size="small"
-        ></el-button
-      ></el-col>
-    </el-row>
+    <div class="taskall">
+      <el-row v-for="items in library" :key="items" class="task">
+        <el-col :span="1"><el-checkbox v-model="checked"></el-checkbox></el-col>
+        <el-col :span="2">{{ items.tasknumber }}</el-col>
+        <el-col :span="4">{{ items.taskname }}</el-col>
+        <el-col :span="5">{{ items.taskdetails }}</el-col>
+        <el-col :span="2">
+          <el-tag type="danger">{{ items.Degree }}</el-tag></el-col
+        >
+        <el-col :span="5">
+          <el-tag type="success">{{ items.tasklabel }}</el-tag></el-col
+        >
+        <el-col :span="2">{{ items.taskperson }}</el-col>
+        <el-col :span="2">{{ items.tasktime }}</el-col>
+        <el-col :span="2"
+          ><el-button
+            type="success"
+            icon="el-icon-message"
+            circle
+            size="small"
+          ></el-button
+          ><el-button
+            type="danger"
+            icon="el-icon-delete"
+            circle
+            size="small"
+          ></el-button
+        ></el-col>
+      </el-row>
+    </div>
     <div class="establishall" v-show="flagtask">
       <div class="establish">
         <el-page-header @back="goBack" content="任务创建" title="">
@@ -88,8 +94,7 @@
           </el-form-item>
           <el-form-item label="指派负责人" prop="region" class="person">
             <el-select v-model="ruleForm.region" placeholder="请选择开发人员">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+              <el-option label="小王" value="小王"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="期限设置" required>
@@ -163,6 +168,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -264,10 +270,25 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["tester"]),
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.tester({
+            taskname: this.ruleForm.name,
+            taskdetail: this.ruleForm.desc,
+            degree: this.ruleForm.resource,
+            tasklabel: this.ruleForm.type,
+            tasktime: this.ruleForm.date1,
+            callback(data) {
+              let { status } = data.params.result;
+              if (status == "0000") {
+                alert("chenggong");
+              } else {
+                alert("shibai");
+              }
+            },
+          });
         } else {
           console.log("error submit!!");
           return false;
@@ -288,8 +309,8 @@ export default {
 </script>
 <style scoped>
 .body {
-  height: 100%;
-  background-color: #f1f1f1;
+  height: 700px;
+  /* background-color: #f1f1f1; */
   position: relative;
 }
 .upload-demo {
@@ -326,6 +347,7 @@ export default {
 }
 .header {
   width: 93vw;
+  height: 40px;
   display: flex;
   /* border-bottom: 1px solid #b3b3b3; */
   justify-content: space-between;
@@ -345,10 +367,18 @@ export default {
   align-items: center;
 }
 .task {
-  height: 40px;
-  border-bottom: 1px dashed #000000;
+  height: 50px;
+  border-bottom: 0;
   display: flex;
   align-items: center;
   margin: 0 20px;
+}
+.task:hover {
+  background-color: #f1f1f1;
+}
+.taskall {
+  width: 93vw;
+  margin-left: 20px;
+  box-shadow: 0px 2px 12px 0px rgb(0 0 0 / 10%);
 }
 </style>
