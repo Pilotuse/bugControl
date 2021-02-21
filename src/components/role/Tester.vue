@@ -201,7 +201,6 @@ export default {
                     let that = this;
                     endtime = this.dayjs(endtime).format('YYYY-MM-DD')
                     label = Array.from(label).join(',')
-                    console.log(taskname, handler, endtime, label, degree, details);
                     this.insertBugOrder({
                         taskname, handler, endtime, label, degree, details, callback(data) {
                             let { code } = data.params.result;
@@ -222,7 +221,6 @@ export default {
             let that = this
             this.queryBugOrder({
                 callback({ params: { result: { msg } } }) {
-
                     that.library = typeof msg == 'object'  ? msg : ''
                 }
             })

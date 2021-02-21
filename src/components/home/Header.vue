@@ -41,9 +41,7 @@ export default {
             this.$router.push('/home/task')
         },
         handleCommand(commnd) {
-            console.log(111);
             if (commnd == 'logout') {
-                console.log(222);
                 localStorage.removeItem('users')
                 this.$router.push('/login')
             }
