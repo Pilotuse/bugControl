@@ -1,52 +1,55 @@
 <template>
-  <div class="body">
-    <el-row>
-      <el-col :span="24" class="headers">
-        <h3 class="title">任务与任务派发</h3>
-        <el-button type="primary" @click="dialogVisible = true"
-          >新建任务</el-button
-        >
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="10" class="search">
-        <el-select v-model="screen.sortby" multiple placeholder="排序方式">
-          <el-option
-            v-for="item in options1"
-            :key="item.id"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-        <el-select
-          v-model="screen.lable"
-          multiple
-          collapse-tags
-          style="margin: 0 20px"
-          placeholder="标签"
-        >
-          <el-option
-            v-for="item in options2"
-            :key="item.id"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-        <el-input
-          placeholder="请输入内容"
-          v-model="screen.search"
-          class="input-with-select"
-        >
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col class="operation">
-        <div style="cursor: pointer">
-          <i class="el-icon-edit" style="color: deepskyblue"></i>批量操作
+    <div class="body">
+        <el-row>
+            <el-col :span="24" class="headers">
+                <h3 class="title">任务与任务派发</h3>
+                <el-button type="primary" @click="dialogVisible = true">新建任务</el-button>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="10" class="search">
+                <el-select v-model="screen.sortby" multiple placeholder="排序方式">
+                    <el-option v-for="item in options1" :key="item.id" :label="item.label" :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-select v-model="screen.lable" multiple collapse-tags style="margin: 0 20px" placeholder="标签">
+                    <el-option v-for="item in options2" :key="item.id" :label="item.label" :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-input placeholder="请输入内容" v-model="screen.search" class="input-with-select">
+                    <el-button slot="append" icon="el-icon-search"></el-button>
+                </el-input>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col class="operation">
+                <div style="cursor: pointer">
+                    <i class="el-icon-edit" style="color: deepskyblue"></i>批量操作
+                </div>
+                <p style="margin-left: 20px">共有{{library.length}}个任务</p>
+            </el-col>
+        </el-row>
+        <div class="taskall">
+            <el-row v-for="items in library" :key="items.id" class="task">
+                <el-col :span="1">
+                    <el-checkbox v-model="selected.checked"></el-checkbox>
+                </el-col>
+                <el-col :span="2">#{{ items.id  }}</el-col>
+                <el-col :span="4">{{ items.taskname }}</el-col>
+                <el-col :span="5">{{ items.details }}</el-col>
+                <el-col :span="2">
+                    <el-tag type="danger">{{ items.degree }}</el-tag>
+                </el-col>
+                <el-col :span="5">
+                    <el-tag type="success">{{ items.label }}</el-tag>
+                </el-col>
+                <el-col :span="2">{{ items.handler }}</el-col>
+                <el-col :span="2">{{ items.tasktime }}</el-col>
+                <el-col :span="2">
+                    <el-button type="success" icon="el-icon-edit" circle size="small"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle size="small"></el-button>
+                </el-col>
+            </el-row>
         </div>
         <p style="margin-left: 20px">共有{{}}个任务</p>
       </el-col>
@@ -185,6 +188,7 @@ export default {
           value: "选项2",
           label: "兼容",
         },
+<<<<<<< HEAD
       ],
       library: [
         {
@@ -307,9 +311,20 @@ export default {
           });
         } else {
           return false;
+=======
+        queryBugInfo() {
+            let that = this
+            this.queryBugOrder({
+                callback({ params: { result: { msg } } }) {
+
+                    that.library = typeof msg == 'object'  ? msg : ''
+                }
+            })
+>>>>>>> b7777cfea3368ea2b2a5216c73fb5a5dd95fe9f5
         }
       });
     },
+<<<<<<< HEAD
     queryBugInfo() {
       let that = this;
       this.queryBugOrder({
@@ -337,6 +352,18 @@ export default {
     });
     this.queryBugInfo();
   },
+=======
+    created() {
+        let that = this;
+        this.queryUser({
+            author_power: 'developer',
+            callback({ params: { result: { msg } } }) {
+                if (typeof msg == 'object') msg.forEach(el => that.developer.push(el.username))
+            }
+        });
+        this.queryBugInfo()
+    }
+>>>>>>> b7777cfea3368ea2b2a5216c73fb5a5dd95fe9f5
 };
 </script>
 
