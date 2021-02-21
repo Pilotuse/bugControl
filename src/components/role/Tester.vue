@@ -26,7 +26,7 @@
                 <div style="cursor: pointer">
                     <i class="el-icon-edit" style="color: deepskyblue"></i>批量操作
                 </div>
-                <p style="margin-left: 20px">共有{{}}个任务</p>
+                <p style="margin-left: 20px">共有{{library.length}}个任务</p>
             </el-col>
         </el-row>
         <div class="taskall">
@@ -222,7 +222,8 @@ export default {
             let that = this
             this.queryBugOrder({
                 callback({ params: { result: { msg } } }) {
-                    that.library = msg
+
+                    that.library = typeof msg == 'object'  ? msg : ''
                 }
             })
         }
@@ -232,7 +233,7 @@ export default {
         this.queryUser({
             author_power: 'developer',
             callback({ params: { result: { msg } } }) {
-                msg.forEach(el => that.developer.push(el.username))
+                if (typeof msg == 'object') msg.forEach(el => that.developer.push(el.username))
             }
         });
         this.queryBugInfo()
