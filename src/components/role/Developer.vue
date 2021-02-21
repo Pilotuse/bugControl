@@ -20,8 +20,9 @@
     </el-card>
     <h3>任务中心</h3>
     <el-card class="box-card">
-      <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
-        <el-table-column prop="date" label="任务名称" width="180">
+      <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName" v-for="items in library"
+        :key="items">
+        <el-table-column prop="taskname" label="任务名称" width="180">
         </el-table-column>
         <el-table-column prop="taskname" label="标签设定" width="180">
         </el-table-column>
@@ -29,14 +30,8 @@
           <el-button type="danger">重要</el-button>
         </el-table-column>
 
-        <el-table-column prop="date" label="日期" sortable width="180" column-key="date" :filters="[
-            { text: '2016-05-01', value: '2016-05-01' },
-            { text: '2016-05-02', value: '2016-05-02' },
-            { text: '2016-05-03', value: '2016-05-03' },
-            { text: '2016-05-04', value: '2016-05-04' },
-          ]">
+        <el-table-column prop="date" label="日期" sortable width="180" column-key="date">
         </el-table-column>
-
         <el-table-column prop="uploaddemo" label="附件" width="300">
         </el-table-column>
         <!-- <el-table-column label="附件">
@@ -68,6 +63,7 @@
 
 <script>
   import * as echarts from "echarts";
+  import developere from '../../module/developer.js';
   export default {
     data() {
       return {
