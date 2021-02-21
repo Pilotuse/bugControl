@@ -1,43 +1,158 @@
 <template>
-  <div>
-    <div class="list">
-      <el-table :data="leaveList" border style="width: 100%">
-        <el-table-column fixed prop="leaveReason" label="待完成">
-        </el-table-column>
-        <el-table-column label="开始时间">
-          <template slot-scope="scope">
-            <span>{{ scope.row.startDate | filterDate }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="结束时间">
-          <template slot-scope="scope">
-            <span>{{ scope.row.endDate | filterDate }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="附件">
-          <template slot-scope="scope">
-            <span v-if="scope.row.pic">
-              <el-image
-                style="width: 100px; height: 100px"
-                :src="scope.row.pic.split('_')[0]"
-                :preview-src-list="scope.row.pic.split('_')"
-              >
-              </el-image>
-            </span>
-          </template>
-        </el-table-column>
+  <div class="content">
+    <h3 class="title">成员管理</h3>
+    <el-button type="success" class="add">新增用户</el-button>
 
-        <el-table-column fixed="right" label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" v-if="scope.row.type == 1"
-              >待修复</el-button
-            >
-            <el-button type="success" v-else-if="scope.row.type == 2"
-              >已修复</el-button
-            >
+    <div class="table">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="用户管理" name="first">
+          <template>
+            <el-table :data="tableData" style="width: 100%">
+              <el-table-column prop="id" label="成员编号" width="180">
+              </el-table-column>
+              <el-table-column prop="username" label="姓名" width="180">
+              </el-table-column>
+
+              <el-table-column prop="user" label="用户名" width="180">
+              </el-table-column>
+              <el-table-column prop="pwd" label="密码" width="180">
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
           </template>
-        </el-table-column>
-      </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="测试人员" name="second">
+          <template>
+            <el-table :data="testDate" style="width: 100%">
+              <el-table-column prop="id" label="成员编号" width="180">
+              </el-table-column>
+              <el-table-column prop="username" label="姓名" width="180">
+              </el-table-column>
+              <el-table-column prop="user" label="用户名" width="180">
+              </el-table-column>
+              <el-table-column prop="pwd" label="密码" width="180">
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </el-tab-pane>
+        <el-tab-pane label="开发人员" name="development">
+          <template>
+            <el-table :data="testDate" style="width: 100%">
+              <el-table-column prop="id" label="成员编号" width="180">
+              </el-table-column>
+              <el-table-column prop="username" label="姓名" width="180">
+              </el-table-column>
+              <el-table-column prop="user" label="用户名" width="180">
+              </el-table-column>
+              <el-table-column prop="pwd" label="密码" width="180">
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      activeName: "second",
+      tableData: [
+        {
+          id: "202102202353001",
+          username: "老范",
+          user: "1056312367@163.com",
+          pwd: "88888888",
+        },
+      ],
+
+      testDate: [
+        {
+          id: "202102202353001",
+          username: "小王",
+          user: "1056312367@163.com",
+          pwd: "88888888",
+        },
+      ],
+      development: [
+        {
+          id: "202102202353001",
+          username: "小王",
+          user: "1056312367@163.com",
+          pwd: "88888888",
+        },
+      ],
+    };
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+  },
+};
+</script>
+
+<style scoped>
+.content {
+  padding: 24px;
+}
+.del {
+  float: left;
+}
+h3.title {
+  margin: 10px 0;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.add {
+  float: left;
+  margin-top: -40px;
+  margin-left: 750px;
+}
+</style>

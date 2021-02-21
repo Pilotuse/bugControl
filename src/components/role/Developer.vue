@@ -188,7 +188,7 @@ export default {
 
 <style scoped>
 .table {
-  padding: 8px 30px;
+  padding: 24px;
 }
 
 .el-table .warning-row {
