@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import loginModule from '../module/loginModule'
 import homeModule from '../module/homeModule'
-import testerModule from '../module/testerMoudule'
+import taskModule from '../module/taskModule'
 
 Vue.use(Vuex)
 
@@ -20,9 +20,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    tester(context, info) {
-      testerModule.tester(info).then(res => info.callback(res))
-    },
     login(context, info) {
       loginModule.login(info).then(res => info.callback(res))
     },
@@ -34,6 +31,15 @@ export default new Vuex.Store({
     },
     getUserMenu(context, info) {
       homeModule.getUserMenu().then(res => info.callback(res))
+    },
+    insertBugOrder(context, info) {
+      taskModule.insertBugOrder(info).then(res => info.callback(res))
+    },
+    queryUser(context, info) {
+      taskModule.queryUser(info).then(res => info.callback(res))
+    },
+    queryBugOrder(context, info){
+      taskModule.queryBugOrder(info).then(res => info.callback(res))
     }
   },
   modules: {}

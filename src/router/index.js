@@ -96,6 +96,15 @@ const routes = [
           title: 'Quality Center - 微聊',
           isLogin: true
         }
+      },
+      {
+        path: 'demand',
+        name: 'demand',
+        component: () => import('../components/home/Demand.vue'),
+        meta: {
+          title: 'Quality Center - 需求中心',
+          isLogin: true
+        }
       }
     ]
   },

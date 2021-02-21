@@ -61,7 +61,7 @@ export default {
     height: 80px;
     display: flex;
     flex-direction: column;
-    color: #40485B;
+    color: #95afc0;
     text-decoration: none;
     text-align: center;
 }
@@ -70,7 +70,7 @@ export default {
     padding: 10px 0;
     font-size: 20px;
     width: 100%;
-    color: #40485B;
+    color: #95afc0;
 }
 
 .navbar a div {
@@ -86,6 +86,10 @@ export default {
     box-sizing: border-box;
 }
 
+.context > div {
+    height: 100%;
+}
+
 .router-link-exact-active.router-link-active {
     color: #FF8F00 !important;
 
@@ -96,5 +100,9 @@ export default {
     div {
         color: #FF8F00 !important;
     }
+}
+
+.el-dialog .el-dialog__body {
+    padding: 0 20px !important;
 }
 </style>

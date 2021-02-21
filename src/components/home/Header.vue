@@ -88,6 +88,7 @@ export default {
     padding-left: 10px;
     font-size: 18px;
     line-height: 46px;
+    user-select: none;
 }
 
 .left i {
@@ -106,20 +107,6 @@ export default {
     cursor: pointer;
 }
 
-.right .role {
-    margin-bottom: 3px;
-    border-radius: 50%;
-    background: #545c64;
-    color: #f1f1f1;
-    text-align: center;
-    font-size: 14px;
-    line-height: 40px;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    user-select: none;
-    box-shadow: 0 0 2px 1px #ccc;
-}
 
 .iconfont {
     font-size: 14px;
@@ -127,7 +114,7 @@ export default {
 }
 
 .right > div {
-    margin: 0 8px;
+   margin: 0 12px;
 }
 
 .el-tag {
@@ -135,13 +122,13 @@ export default {
     padding: 0 2px;
     line-height: 22px;
     text-align: center;
-    border-radius: 2px;
+    border-radius: 4px;
     border: none;
     font-size: 12px;
 }
 
 .el-tag.el-tag--light {
-    background: #7f8fa6;
+    background: #6C63FF;
     color: #dcdde1;
 }
 </style>

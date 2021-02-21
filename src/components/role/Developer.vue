@@ -63,7 +63,6 @@
 
 <script>
   import * as echarts from "echarts";
-  import developere from '../../module/developer.js';
   export default {
     data() {
       return {

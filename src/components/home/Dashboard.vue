@@ -4,6 +4,9 @@
             <h3 class="title">信息统计</h3>
             <div class="canvas">
                 <el-card class="box-card">
+                    <div class="desc">我的需求</div>
+                </el-card>
+                <el-card class="box-card">
                     <div class="desc">问题总量</div>
                     <div id="myecharts"></div>
                 </el-card>
@@ -19,12 +22,15 @@
                 <el-card class="box-card">
                     <div class="desc">我的问题数量</div>
                 </el-card>
+
             </div>
         </div>
         <div>
             <h3 class="title">详细信息</h3>
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="问题汇总" name="first">
+                <el-tab-pane label="我的需求" name="1">我的需求</el-tab-pane>
+                <el-tab-pane label="我的问题" name="6">我的问题</el-tab-pane>
+                <el-tab-pane label="问题汇总" name="2">
                     <el-table :data="tableData" style="width: 100%" :show-header="false" @cell-click="findData">
                         <el-table-column prop="id"></el-table-column>
                         <el-table-column prop="title"></el-table-column>
@@ -32,15 +38,12 @@
                         <el-table-column prop="person"></el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="已解决" name="second">已解决</el-tab-pane>
-                <el-tab-pane label="待上线" name="third">待上线</el-tab-pane>
-                <el-tab-pane label="处理中" name="fourth">处理中</el-tab-pane>
-                <el-tab-pane label="我的问题" name="fifth">我的问题</el-tab-pane>
+                <el-tab-pane label="处理中" name="5">处理中</el-tab-pane>
+                <el-tab-pane label="待上线" name="4">待上线</el-tab-pane>
+                <el-tab-pane label="已解决" name="3">已解决</el-tab-pane>
             </el-tabs>
         </div>
         <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='600px'>
-            <br>
-
             <span>我来啦!</span>
         </el-drawer>
     </div>
@@ -90,7 +93,7 @@ export default {
     data() {
         return {
             drawer: false,
-            activeName: 'first',
+            activeName: '1',
             tableData: [{
                 id: '202102202353001',
                 title: '页面布局错位',
@@ -124,16 +127,13 @@ export default {
 };
 </script>
 <style scoped>
-.text {
-    font-size: 14px;
-}
-
-.item {
-    margin-bottom: 18px;
+.container {
+    padding: 24px;
 }
 
 .box-card {
-    width: 350px !important;
+    margin-top: 10px;
+    width: 340px !important;
     height: 200px !important;
     background: #e3f4ff;
     border: 1px solid #c2daeb;
@@ -151,26 +151,13 @@ export default {
     margin-right: 0;
 }
 
-.el-table__row {
-    width: 100%;
+.el-card__body {
+    padding: 0 !important;
+    position: relative;
 }
 
-.el-table__row > td:first-child {
-    width: 20%;
-}
-
-.el-table__row > td:nth-child(2) {
-    width: 40%;
-}
-.el-table__row > td:nth-child(2) {
-    width: 20%;
-}
-
-.el-table__row > td:nth-child(2) {
-    width: 20%;
-}
-.el-table__row > td:nth-child(2) {
-    width: 20%;
+.el-drawer__body {
+    padding-top: 46px !important;
 }
 
 h3.title {
@@ -179,19 +166,11 @@ h3.title {
     color: rgba(0, 0, 0, 0.8);
 }
 
-.el-card__body {
-    padding: 0 !important;
-    position: relative;
-}
-
 .el-table td,
 .el-table th {
     padding: 10px 0;
 }
 
-canvas {
-    width: 100%;
-}
 
 #myecharts {
     width: 100%;
@@ -199,21 +178,15 @@ canvas {
     opacity: 0.7;
 }
 
-.container {
-    padding: 24px;
-}
 
 .canvas {
     display: flex;
+    flex-wrap: wrap;
 }
-
 .canvas > div {
     margin-right: 20px;
 }
 
-.el-drawer__body {
-    padding-top: 46px !important;
-}
 
 .desc {
     position: absolute;
