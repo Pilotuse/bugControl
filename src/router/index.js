@@ -95,7 +95,45 @@ const routes = [
         meta: {
           title: 'Quality Center - 微聊',
           isLogin: true
-        }
+        },
+        children: [
+          {
+            path: 'chart',
+            name: 'chart',
+            component: () => import('../components/micoChat/Chart.vue'),
+            meta: {
+              title: 'Quality Center - 聊天',
+              isLogin: true
+            },
+          },
+          {
+            path: 'contact',
+            name: 'contact',
+            component: () => import('../components/micoChat/Contact.vue'),
+            meta: {
+              title: 'Quality Center - 同事',
+              isLogin: true
+            },
+          },
+          {
+            path: 'collection',
+            name: 'collection',
+            component: () => import('../components/micoChat/Collection.vue'),
+            meta: {
+              title: 'Quality Center - 收藏',
+              isLogin: true
+            },
+          },
+          {
+            path: 'setting',
+            name: 'setting',
+            component: () => import('../components/micoChat/Settings.vue'),
+            meta: {
+              title: 'Quality Center - 设置',
+              isLogin: true
+            },
+          }
+        ]
       },
       {
         path: 'demand',
@@ -105,7 +143,23 @@ const routes = [
           title: 'Quality Center - 需求中心',
           isLogin: true
         }
-      }
+      }, {
+        path: 'settings',
+        name: 'settings',
+        component: () => import('../components/home/Settings.vue'),
+        meta: {
+          title: 'Quality Center - 设置',
+          isLogin: true
+        }
+      }, {
+        path: 'help',
+        name: 'help',
+        component: () => import('../components/home/Help.vue'),
+        meta: {
+          title: 'Quality Center - 帮助中心',
+          isLogin: true
+        }
+      },
     ]
   },
   {

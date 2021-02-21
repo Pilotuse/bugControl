@@ -130,26 +130,7 @@ export default {
                 value: "选项2",
                 label: "兼容",
             }],
-            library: [{
-                id: 1,
-                tasknumber: "#abc",
-                taskname: "淘宝bug",
-                taskdetails: "解决bug",
-                Degree: "重要",
-                tasklabel: "bug",
-                taskperson: "小王",
-                tasktime: "2月25日",
-            },
-            {
-                id: 2,
-                tasknumber: "#zxc",
-                taskname: "天猫bug",
-                taskdetails: "解决bug",
-                Degree: "重要",
-                tasklabel: "样式",
-                taskperson: "小王",
-                tasktime: "2月26日",
-            }],
+            library: [],
             flagtask: false,
             ruleForm: {
                 taskname: "", //名称

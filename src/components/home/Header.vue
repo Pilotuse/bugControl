@@ -44,6 +44,10 @@ export default {
             if (commnd == 'logout') {
                 localStorage.removeItem('users')
                 this.$router.push('/login')
+            } else if (commnd == 'setting') {
+                this.$router.push('/home/settings')
+            } else if (commnd == 'help') {
+                this.$router.push('/home/help')
             }
         }
     },
@@ -105,14 +109,13 @@ export default {
     cursor: pointer;
 }
 
-
 .iconfont {
     font-size: 14px;
     color: #fff;
 }
 
 .right > div {
-   margin: 0 12px;
+    margin: 0 12px;
 }
 
 .el-tag {
@@ -126,7 +129,7 @@ export default {
 }
 
 .el-tag.el-tag--light {
-    background: #6C63FF;
+    background: #6c63ff;
     color: #dcdde1;
 }
 </style>

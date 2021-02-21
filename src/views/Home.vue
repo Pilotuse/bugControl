@@ -54,6 +54,7 @@ export default {
     width: 60px;
     height: 100%;
     background: #F7F7F7;
+    z-index: 9999;
 }
 
 .navbar a {
