@@ -57,7 +57,6 @@ export default {
     ...mapActions(["queryOwnBug", "queryUser"]),
     queryBugInfo() {
       let that = this;
-      console.log(this.queryOwnBug);
       this.queryOwnBug({
         callback({ params: { result: { msg }, }, }) {
           if (typeof msg == "object") {
