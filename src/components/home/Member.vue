@@ -4,64 +4,43 @@
     <div class="button-list">
       <div class="add" v-if="buttonPermission">
         <el-button type="success" class="add-one" @click="dialogTableControl">新增用户</el-button>
-        <el-button type="success" class="add-manny" @click="dialogTableControl">批量新增</el-button>
+        <el-button type="success" class="add-manny" @click="batchTableControl">批量新增</el-button>
       </div>
     </div>
-    <div class="table">
 
-      <div class="options">
-        <div class="team">
-          小组：
-          <el-select v-model="search.team" placeholder="请选择小组信息">
-            <el-option label="开发" value="开发"></el-option>
-          </el-select>
-        </div>
-        <div class="status">
-          状态：
-          <el-select v-model="search.status" placeholder="请选择成员状态">
-            <el-option label="暂停" value="0"></el-option>
-            <el-option label="正常" value="1"></el-option>
-          </el-select>
-        </div>
-        <div class="search-area">
-          <span>搜索：</span>
-          <el-input v-model="search.desciber" placeholder="请输入用户名"></el-input>
-        </div>
+    <div class="options">
+      <div class="team">
+        小组：
+        <el-select v-model="search.team" placeholder="请选择小组信息">
+          <el-option label="开发" value="开发"></el-option>
+        </el-select>
       </div>
-
+      <div class="status">
+        状态：
+        <el-select v-model="search.status" placeholder="请选择成员状态">
+          <el-option label="暂停" value="0"></el-option>
+          <el-option label="正常" value="1"></el-option>
+        </el-select>
+      </div>
+      <div class="search-area">
+        <span>搜索：</span>
+        <el-input v-model="search.desciber" placeholder="请输入用户名"></el-input>
+      </div>
     </div>
 
+    <!-- tab栏 -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="用户管理" name="first" v-if="buttonPermission">用户管理</el-tab-pane>
-      <el-tab-pane label="开发" name="second">
-        <el-table :data="tableData" stripe style="width: 100%" @row-click="showDrawer">
-          <el-table-column prop="id" label="编号" width="120">
-          </el-table-column>
-          <el-table-column prop="account" label="用户名" width="140">
-          </el-table-column>
-          <el-table-column prop="username" label="账号" width="360">
-          </el-table-column>
-          <el-table-column prop="contact" label="联系方式">
-          </el-table-column>
-          <el-table-column prop="status" label="账户状态">
-          </el-table-column>
-          <el-table-column prop="registerTime" label="注册时间">
-          </el-table-column>
-          <el-table-column prop="registerTime" label="结束时间">
-          </el-table-column>
-          <el-table-column prop="describer" label="描述">
-          </el-table-column>
-        </el-table>
-        <el-pagination background layout="prev, pager, next" :total="1000">
-        </el-pagination>
-      </el-tab-pane>
-      <el-tab-pane label="测试" name="third">测试</el-tab-pane>
-      <el-tab-pane label="运维" name="fourth">运维</el-tab-pane>
-      <el-tab-pane label="需求" name="fifth">需求</el-tab-pane>
-      <el-tab-pane label="三方" name="sixth">三方</el-tab-pane>
+      <el-tab-pane label="用户管理" name="userManagement" v-if="buttonPermission"></el-tab-pane>
+      <el-tab-pane label="开发" name="developer"></el-tab-pane>
+      <el-tab-pane label="测试" name="tester"></el-tab-pane>
+      <el-tab-pane label="运维" name="operationer"></el-tab-pane>
+      <el-tab-pane label="需求" name="demander"></el-tab-pane>
+      <el-tab-pane label="三方" name="outsourcing"></el-tab-pane>
+      <membertabs :tabsName="tabsName"></membertabs>
     </el-tabs>
 
-    <el-dialog title="新增成员" :visible.sync="dialogFormVisible" width="30%">
+    <!-- 新增按钮 -->
+    <!-- <el-dialog title="新增成员" :visible.sync="dialogFormVisible" width="30%">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item label="姓名" :label-width="formLabelWidth">
           <el-input v-model="form.nikename" autocomplete="off" prop="nikename" placeholder="请输入姓名"></el-input>
@@ -93,14 +72,29 @@
       </div>
     </el-dialog>
 
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='700px'>
-      <span>我来啦!</span>
-    </el-drawer>
+    <el-dialog title="批量新增" :visible.sync="batchTableAdd" width="30%">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+        <el-form-item label="文件序号" :label-width="formLabelWidth">
+          <el-input v-model="form.username" autocomplete="off" prop="username" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="选择文件" :label-width="formLabelWidth">
+          <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="fileList">
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消新增</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">批量新增</el-button>
+      </div>
+    </el-dialog> -->
+
   </div>
 </template>
 
 
 <script>
+import membertabs from '../other/MemberTabs'
 export default {
   data() {
     return {
@@ -109,11 +103,6 @@ export default {
         status: '',
         desciber: ''
       },
-      drawer: false,
-      activeName: 'second',
-      buttonPermission: '',
-      dialogTableVisible: false,
-      dialogFormVisible: false,
       form: {
         nikename: '',
         username: '',
@@ -122,115 +111,29 @@ export default {
         activation: '1'
       },
       formLabelWidth: '120px',
-      tableData: [{
-        id: 1,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 2,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 3,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 4,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 5,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 6,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 7,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 8,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 9,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 10,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 11,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }, {
-        id: 12,
-        account: '范鸿宇',
-        username: 'fanhngyu126@126.com',
-        contact: '13426192877',
-        status: '正常',
-        registerTime: '2020-02-22',
-        describer: '注册'
-      }]
+      activeName: 'developer',
+      buttonPermission: '',
+      batchTableAdd: false,
+      dialogFormVisible: false,
+      tabsName: '',
     };
   },
   methods: {
     dialogTableControl() {
       this.dialogFormVisible = true
     },
-    showDrawer(row) {
-      console.log(row);
-      this.drawer = true
+    batchTableControl() {
+      this.batchTableAdd = true
+    },
+    handleClick(tab) {
+      this.tabsName = tab.name
     }
   },
+  components: {
+    membertabs
+  },
   created() {
+    this.tabsName = this.activeName
     this.buttonPermission = JSON.parse(localStorage.getItem('users')).author == 'admin' ? true : false
   }
 };
@@ -272,11 +175,6 @@ h3.title {
 
 .options > div {
   margin-right: 20px;
-}
-
-.search-area {
-  display: flex;
-  width: 340px;
 }
 
 .search-area input {

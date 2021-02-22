@@ -1,5 +1,5 @@
 <template>
-    <div>
-       需求文档
-    </div>
+  <div>
+    历史需求信息
+  </div>
 </template>
