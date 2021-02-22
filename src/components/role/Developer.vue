@@ -87,9 +87,7 @@ export default {
             });
           });
         }
-        let data = that.tableData.filter((el) => {
-          return el.status == "1";
-        });
+        let data = that.tableData.filter((el) => el.status != "1");
         that.tablejie = data.length;
         var myChart = echarts.init(document.getElementById("myecharts"));
         var option = {
