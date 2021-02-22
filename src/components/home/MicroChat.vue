@@ -10,7 +10,7 @@
       </div>
       <div class="middle">
         <div class="search">
-          <el-input placeholder="搜索" prefix-icon="el-icon-search" v-model="input2" size="mini"></el-input>
+          <el-input placeholder="搜索" prefix-icon="el-icon-search" v-model="serarchvalue" size="mini"></el-input>
           <div class="el-icon-plus buttons"></div>
         </div>
         <router-view class="show-box"></router-view>
@@ -34,7 +34,8 @@ export default {
   data() {
     return {
       comps: '',
-      showHeader: ''
+      showHeader: '',
+      serarchvalue:''
     }
   },
   methods: {

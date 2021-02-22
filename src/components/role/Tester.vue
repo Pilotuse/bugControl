@@ -1,100 +1,107 @@
 <template>
-    <div class="body">
-        <el-row>
-            <el-col :span="24" class="headers">
-                <h3 class="title">任务与任务派发</h3>
-                <el-button type="primary" @click="dialogVisible = true">新建任务</el-button>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="10" class="search">
-                <el-select v-model="screen.sortby" multiple placeholder="排序方式">
-                    <el-option v-for="item in options1" :key="item.id" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-                <el-select v-model="screen.lable" multiple collapse-tags style="margin: 0 20px" placeholder="标签">
-                    <el-option v-for="item in options2" :key="item.id" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-                <el-input placeholder="请输入内容" v-model="screen.search" class="input-with-select">
-                    <el-button slot="append" icon="el-icon-search"></el-button>
-                </el-input>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col class="operation">
-                <div style="cursor: pointer">
-                    <i class="el-icon-edit" style="color: deepskyblue"></i>批量操作
-                </div>
-                <p style="margin-left: 20px">共有{{library.length}}个任务</p>
-            </el-col>
-        </el-row>
-        <div class="taskall">
-            <el-row v-for="items in library" :key="items.id" class="task">
-                <el-col :span="1">
-                    <el-checkbox v-model="selected.checked"></el-checkbox>
-                </el-col>
-                <el-col :span="2">#{{ items.id  }}</el-col>
-                <el-col :span="4">{{ items.taskname }}</el-col>
-                <el-col :span="5">{{ items.details }}</el-col>
-                <el-col :span="2">
-                    <el-tag type="danger">{{ items.degree }}</el-tag>
-                </el-col>
-                <el-col :span="5">
-                    <el-tag type="success">{{ items.label }}</el-tag>
-                </el-col>
-                <el-col :span="2">{{ items.handler }}</el-col>
-                <el-col :span="2">{{ items.tasktime }}</el-col>
-                <el-col :span="2">
-                    <el-button type="success" icon="el-icon-edit" circle size="small"></el-button>
-                    <el-button type="danger" icon="el-icon-delete" circle size="small"></el-button>
+    <div class="container clearfix">
+        <div class="body">
+            <el-row>
+                <el-col :span="24" class="headers">
+                    <h3 class="title">任务派发</h3>
+                    <el-button type="primary" @click="dialogVisible = true">新建任务</el-button>
                 </el-col>
             </el-row>
+            <el-row>
+                <el-col :span="10" class="search">
+                    <el-select v-model="screen.sortby" multiple placeholder="排序方式">
+                        <el-option v-for="item in options1" :key="item.id" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <el-select v-model="screen.lable" multiple collapse-tags style="margin: 0 20px" placeholder="标签">
+                        <el-option v-for="item in options2" :key="item.id" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <el-input placeholder="请输入内容" v-model="screen.search" class="input-with-select">
+                        <el-button slot="append" icon="el-icon-search"></el-button>
+                    </el-input>
+                </el-col>
+            </el-row>
+            <el-row class="issue">
+                <tr class="tr-header">
+                    <th colspan="3">
+                        <div class="operation">
+                            <div style="cursor: pointer"> <i class="iconfont icon-bi"></i> 批量操作</div>
+                            <div style="margin-left:20px">共有{{library.length}}个任务</div>
+                        </div>
+                    </th>
+                    <th class="issue-time" style="text-align:left;">创建时间</th>
+                    <th class="issue-time" style="text-align:left;">时间安排</th>
+                    <th class="issue-assignee" style="text-align:right;">处理人</th>
+                </tr>
+                <tr v-for="items in library" :key="items.id">
+                    <td class="issue-status"><i class="el-icon-loading"></i></td>
+                    <td class="issue-id">
+                        <span>CQVC{{ items.id  }}</span>
+                    </td>
+                    <td class="issue-detail">
+                        <span @click="getIssueInfo(items.id)" style="display: inline-block;">{{ items.taskname }}</span>
+                        <el-tag type="danger" effect="plain"> {{ items.degree }}</el-tag>
+                        <el-tag type="warning" effect="plain"> {{ items.label }}</el-tag>
+                    </td>
+                    <td class="issue-time"> 20200200 </td>
+                    <td class="issue-time"> 20200200 </td>
+                    <td class="issue-assignee"> {{ items.handler }}</td>
+                </tr>
+            </el-row>
+
+            <!-- 任务输入框 -->
+            <el-dialog title="新建信息" :visible.sync="dialogVisible" width="700px" :before-close="handleClose">
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="名称" prop="taskname">
+                        <el-input v-model="ruleForm.taskname"></el-input>
+                    </el-form-item>
+                    <el-form-item label="指派给" prop="handler" class="person">
+                        <el-select v-model="ruleForm.handler" placeholder="请选择开发人员">
+                            <el-option v-for="name in developer" :label="name" :value="name" :key="name"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="期限" required>
+                        <el-col :span="11">
+                            <el-form-item prop="endtime">
+                                <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.endtime" style="width: 100%" :picker-options="pickerOptions"></el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="标签" prop="label">
+                        <el-checkbox-group v-model="ruleForm.label">
+                            <el-checkbox label="bug" name="type"></el-checkbox>
+                            <el-checkbox label="需求" name="type"></el-checkbox>
+                            <el-checkbox label="样式" name="type"></el-checkbox>
+                            <el-checkbox label="兼容" name="type"></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item label="优先级" prop="degree">
+                        <el-radio-group v-model="ruleForm.degree">
+                            <el-radio label="高"></el-radio>
+                            <el-radio label="中"></el-radio>
+                            <el-radio label="低"></el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="详情" prop="details">
+                        <el-input type="textarea" v-model="ruleForm.details"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">确认提交</el-button>
+                        <el-button type="primary" @click="handleCancel">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
         </div>
 
-        <!-- 任务输入框 -->
-        <el-dialog title="新建信息" :visible.sync="dialogVisible" width="700px" :before-close="handleClose">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="名称" prop="taskname">
-                    <el-input v-model="ruleForm.taskname"></el-input>
-                </el-form-item>
-                <el-form-item label="指派给" prop="handler" class="person">
-                    <el-select v-model="ruleForm.handler" placeholder="请选择开发人员">
-                        <el-option v-for="name in developer" :label="name" :value="name" :key="name"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="期限" required>
-                    <el-col :span="11">
-                        <el-form-item prop="endtime">
-                            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.endtime" style="width: 100%"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="标签" prop="label">
-                    <el-checkbox-group v-model="ruleForm.label">
-                        <el-checkbox label="bug" name="type"></el-checkbox>
-                        <el-checkbox label="需求" name="type"></el-checkbox>
-                        <el-checkbox label="样式" name="type"></el-checkbox>
-                        <el-checkbox label="兼容" name="type"></el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-                <el-form-item label="优先级" prop="degree">
-                    <el-radio-group v-model="ruleForm.degree">
-                        <el-radio label="高"></el-radio>
-                        <el-radio label="中"></el-radio>
-                        <el-radio label="低"></el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="详情" prop="details">
-                    <el-input type="textarea" v-model="ruleForm.details"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">确认提交</el-button>
-                    <el-button type="primary" @click="handleCancel">取消</el-button>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
-
+        <div class="analysis">
+            <h4 class="title">概览报表</h4>
+        </div>
+        <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='62%' :modal="false">
+            <div class="drawer-container">
+                组件显示bug详细信息
+            </div>
+        </el-drawer>
     </div>
 </template>
 <script>
@@ -105,7 +112,13 @@ export default {
             dialogVisible: false,
             developer: [],
             screen: { lable: '', sortby: '', search: '' },
+            drawer: false,
             selected: { checked: [] },
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                }
+            },
             options1: [
                 { id: 1, value: "选项1", label: "重要程度", },
                 { id: 2, value: "选项2", label: "到期时间", }
@@ -175,6 +188,10 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
+        getIssueInfo(issueid) {
+            this.drawer = true
+            console.log(issueid);
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -189,7 +206,7 @@ export default {
                                 that.queryBugInfo()
                                 that.dialogVisible = false
                             } else {
-                                alert("shibai");
+                                this.$message.error('数据提交失败，请稍后再试！');
                             }
                         },
                     });
@@ -202,7 +219,7 @@ export default {
             let that = this
             this.queryBugOrder({
                 callback({ params: { result: { msg } } }) {
-                    that.library = typeof msg == 'object'  ? msg : ''
+                    that.library = typeof msg == 'object' ? msg : ''
                 }
             })
         }
@@ -221,13 +238,26 @@ export default {
 </script>
 
 
-
-
-
 <style scoped>
+.container {
+    width: 100%;
+    height: 100%;
+}
+
 .body {
     position: relative;
     height: 100%;
+    width: 82%;
+    float: left;
+}
+
+.analysis {
+    float: right;
+    width: 18%;
+    background: #f7f7f7;
+    height: 100%;
+    border-left: 1px solid #e4eaed;
+    box-sizing: border-box;
 }
 
 .right {
@@ -254,7 +284,7 @@ export default {
 }
 
 .headers {
-    width: 93vw;
+    width: 100%;
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -263,44 +293,99 @@ export default {
     margin-top: 10px;
     border-radius: 10px;
 }
+
 .search {
     display: flex;
     margin-top: 20px;
-    /* margin-bottom: 20px; */
+    margin-bottom: 6px;
 }
 .operation {
     display: flex;
     align-items: center;
+    font-size: 14px;
+    color: #5c7b8b;
 }
-.task {
-    display: flex;
+.issue {
     align-items: center;
-    height: 40px;
     border-bottom: 0;
     align-items: center;
-    padding: 0 20px;
-    margin: 0;
+    margin: 0 20px;
+    padding: 0;
     color: #666;
+    height: calc(100% - 116px);
+    overflow: scroll;
 }
-.task:hover {
+
+.issue-number {
+    position: absolute;
+}
+
+.issue th {
+    color: #8c92a4;
+    font-weight: 400;
+}
+
+.issue tr:not(:first-child):hover {
     background-color: #f1f1f1;
 }
-.taskall {
-    width: 93vw;
-    margin-left: 20px;
-    background: #f5f6fa;
+
+.issue tr {
+    width: 100%;
+    font-size: 14px;
+    line-height: 40px;
+}
+
+.issue tr td:last-child {
+    text-align: right;
+}
+
+.issue-status {
+    width: 20px;
+}
+
+.issue-id {
+    width: 1% !important;
+}
+
+.issue-id span {
+    display: inline-block;
+    width: 53px;
+    height: 18px;
+    background: #f5f6f8;
+    color: #8c92a4;
     border-radius: 4px;
+    line-height: 18px;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.issue-detail {
+    width: 50%;
+    cursor: pointer;
+    color: #005980;
 }
 
 .el-tag {
-    height: 22px;
-    line-height: 22px;
-    border-radius: 0;
+    line-height: 20px;
+    height: 20px;
+    margin-left: 4px;
 }
 
-h3.title {
-    margin: 10px 0;
+h4.title {
+    margin: 20px 20px;
     font-size: 20px;
     color: rgba(0, 0, 0, 0.8);
+}
+
+.el-card {
+    margin: 0 20px;
+}
+
+.drawer-container {
+    padding: 60px 20px 20px 20px;
+    width: 100%;
+    height: 100%;
 }
 </style>

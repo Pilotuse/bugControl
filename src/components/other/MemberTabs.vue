@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{tabsName}}
     <el-table :data="tableData" stripe style="width: 100%" @row-click="showDrawer">
       <el-table-column prop="id" label="编号" width="120">
       </el-table-column>
@@ -19,7 +18,7 @@
       <el-table-column prop="describer" label="描述">
       </el-table-column>
     </el-table>
-    <el-pagination background layout="prev, pager, next" :total="totalCase" page-size="12" @current-change="handleCurrentChange"></el-pagination>
+    <el-pagination background layout="prev, pager, next" :total="totalCase" :page-size="12" @current-change="handleCurrentChange"></el-pagination>
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='700px'>
       <span>我来啦!</span>
     </el-drawer>
