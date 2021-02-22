@@ -94,7 +94,9 @@
             </el-dialog>
         </div>
 
-        <div class="analysis"></div>
+        <div class="analysis">
+            <h4 class="title">概览报表</h4>
+        </div>
         <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='62%' :modal="false">
             <div class="drawer-container">
                 组件显示bug详细信息
@@ -371,8 +373,8 @@ export default {
     margin-left: 4px;
 }
 
-h3.title {
-    margin: 10px 0;
+h4.title {
+    margin: 20px 20px;
     font-size: 20px;
     color: rgba(0, 0, 0, 0.8);
 }
