@@ -21,7 +21,7 @@
     <h3>任务中心</h3>
     <el-card class="box-card">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="idnumber" label="ID" width="180">
+        <el-table-column prop="idnumber" label="姓名" width="180">
         </el-table-column>
         <el-table-column prop="belongto" label="指派" width="180">
         </el-table-column>
@@ -58,6 +58,7 @@
       };
     },
     methods: {
+
       ...mapActions(["queryBugOrder", "queryUser"]),
       queryBugInfo() {
         let that = this;
