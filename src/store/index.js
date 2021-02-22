@@ -38,7 +38,7 @@ export default new Vuex.Store({
     queryUser(context, info) {
       taskModule.queryUser(info).then(res => info.callback(res))
     },
-    queryBugOrder(context, info){
+    queryBugOrder(context, info) {
       taskModule.queryBugOrder(info).then(res => info.callback(res))
     }
   },
