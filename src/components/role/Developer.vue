@@ -17,13 +17,13 @@
     <h3>任务中心</h3>
     <el-card class="box-card">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="idnumber" label="ID" width="180"></el-table-column>
-        <el-table-column prop="belongto" label="指派" width="180"> </el-table-column>
-        <el-table-column prop="label" label="标签" width="180"> </el-table-column>
-        <el-table-column prop="degree" label="优先级" width="180"> </el-table-column>
-        <el-table-column prop="end_time" label="日期" sortable width="180" column-key="date"> </el-table-column>
-        <el-table-column prop="details" label="任务详情" width="300"> </el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column prop="idnumber" label="ID"></el-table-column>
+        <el-table-column prop="belongto" label="指派"> </el-table-column>
+        <el-table-column prop="label" label="标签"> </el-table-column>
+        <el-table-column prop="degree" label="优先级"> </el-table-column>
+        <el-table-column prop="end_time" label="日期" sortable column-key="date"> </el-table-column>
+        <el-table-column prop="details" label="任务详情"> </el-table-column>
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="primary" v-if="scope.row.type == 1">已修复</el-button>
             <el-button type="dangers" v-else>待修复</el-button>
@@ -228,9 +228,5 @@ export default {
   color: red;
   font-size: 30px;
   font-weight: 700;
-}
-
-table {
-  width: 100% !important;
 }
 </style>
