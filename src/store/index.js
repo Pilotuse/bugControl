@@ -40,6 +40,9 @@ export default new Vuex.Store({
     },
     queryBugOrder(context, info) {
       taskModule.queryBugOrder(info).then(res => info.callback(res))
+    },
+    queryOwnBug(context, info) {
+      taskModule.queryOwnOrder(info).then(res => info.callback(res))
     }
   },
   modules: {}

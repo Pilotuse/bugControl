@@ -1,5 +1,5 @@
 <template>
-    <div>
-        帮助中心
-    </div>
+  <div>
+
+  </div>
 </template>

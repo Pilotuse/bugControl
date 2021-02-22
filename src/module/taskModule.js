@@ -7,5 +7,6 @@ export default {
     insertBugOrder: ({ taskname, handler, endtime, label, degree, details }) => post('/api/user/transaction', {
         taskname, handler, endtime, label, degree, details, apiName: 'insertBugOrder', bipcode: 'BIP10009', activitycode: 'ACT10009'
     }),
-    queryBugOrder: () => post('/api/user/transaction', { apiName: 'queryBugOrder', bipcode: 'BIP10010', activitycode: 'ACT10010' })
+    queryBugOrder: () => post('/api/user/transaction', { apiName: 'queryBugOrder', bipcode: 'BIP10010', activitycode: 'ACT10010' }),
+    queryOwnOrder: () => post('api/user/transaction', { apiName: 'queryOwnBug', bipcode: 'BIP10011', activitycode: 'ACT10011' })
 }

@@ -54,19 +54,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["queryBugOrder", "queryUser"]),
+    ...mapActions(["queryOwnBug", "queryUser"]),
     queryBugInfo() {
       let that = this;
-      this.queryBugOrder({
-        callback({
-          params: {
-            result: { msg },
-          },
-        }) {
+      console.log(this.queryOwnBug);
+      this.queryOwnBug({
+        callback({ params: { result: { msg }, }, }) {
           if (typeof msg == "object") {
             that.tableall = msg.length;
-            // console.log(msg.length);
-
             msg.forEach((el) => {
               that.tableData.push({
                 idnumber: el.id,

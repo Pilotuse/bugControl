@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <h3 class="title">文档查阅</h3>
+    <h3 class="title">查阅文档</h3>
     <div class="doc">
       <el-card class="box-card" shadow="hover" tag="a">
         需求文档
@@ -16,7 +16,7 @@
       </el-card>
 
     </div>
-    <h3 class="title">在线服务</h3>
+    <h3 class="title">在线文档</h3>
     <div class="service">
       <el-card class="box-card" shadow="hover">
         在线查看
@@ -28,7 +28,7 @@
       </el-card>
     </div>
 
-    <h3 class="title">优质技术文章</h3>
+    <h3 class="title">技术文章</h3>
     <div class="service">
       <el-card class="box-card" shadow="hover">
         html & css
