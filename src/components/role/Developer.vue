@@ -4,15 +4,15 @@
     <el-card class="box-card box">
       <div class="text">
         问题总数
-        <p>10</p>
+        <p>{{ tableall }}</p>
       </div>
       <div class="text">
         已完成
-        <p>1</p>
+        <p>{{ tablejie }}</p>
       </div>
       <div class="text1">
         未完成
-        <p>9</p>
+        <p>{{ tableall - tablejie }}</p>
       </div>
       <div id="myecharts1"></div>
 
@@ -31,13 +31,21 @@
           <el-button type="danger">重要</el-button>
         </el-table-column>
 
-        <el-table-column prop="end_time" label="日期" sortable width="180" column-key="date">
+        <el-table-column
+          prop="end_time"
+          label="日期"
+          sortable
+          width="180"
+          column-key="date"
+        >
         </el-table-column>
         <el-table-column prop="details" label="任务详情" width="300">
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
-            <el-button type="primary" v-if="scope.row.type == 1">已修复</el-button>
+            <el-button type="primary" v-if="scope.row.type == 1"
+              >已修复</el-button
+            >
             <el-button type="dangers" v-else>待修复</el-button>
           </template>
         </el-table-column>
@@ -52,6 +60,8 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      tableall: "",
+      tablejie: "",
       tableData: [],
     };
   },
@@ -60,15 +70,33 @@ export default {
     queryBugInfo() {
       let that = this;
       this.queryBugOrder({
-        callback({ params: { result: { msg } } }) {
+        callback({
+          params: {
+            result: { msg },
+          },
+        }) {
           if (typeof msg == "object") {
-            msg.forEach(el => {
+            that.tableall = msg.length;
+            // console.log(msg.length);
+
+            msg.forEach((el) => {
               that.tableData.push({
-                idnumber: el.id, belongto: el.belongto, label: el.label, degree: el.degree, end_time: el.end_time, details: el.details
-              })
-            })
+                idnumber: el.id,
+                belongto: el.belongto,
+                label: el.label,
+                degree: el.degree,
+                end_time: el.end_time,
+                details: el.details,
+                status: el.status,
+              });
+            });
           }
           console.log(that.tableData);
+          let data = that.tableData.filter((el) => {
+            return el.status == "1";
+          });
+          console.log(data.length);
+          that.tablejie = data.length;
         },
       });
     },
@@ -88,7 +116,6 @@ export default {
   mounted() {
     var myChart = echarts.init(document.getElementById("myecharts"));
     var myChart1 = echarts.init(document.getElementById("myecharts1"));
-
     var option = {
       tooltip: {
         trigger: "item",
@@ -117,9 +144,9 @@ export default {
             show: false,
           },
           data: [
-            { value: 9, name: "未完成" },
+            { value: 1, name: "未完成" },
 
-            { value: 1, name: "已完成" },
+            { value: 4, name: "已完成" },
           ],
         },
       ],
