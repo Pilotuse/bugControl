@@ -3,14 +3,18 @@
     <h3>概览报表</h3>
     <el-card class="box-card box">
       <div class="text">
-        问题总数 <p>{{ tableall }}</p>
+        问题总数
+        <p>{{ tableall }}</p>
       </div>
-      <div class="text"> 已完成 <p>{{ tablejie }}</p>
+      <div class="text">
+        已完成
+        <p>{{ tablejie }}</p>
       </div>
-      <div class="text1"> 未完成
+      <div class="text1">
+        未完成
         <p>{{ tableall - tablejie }}</p>
       </div>
-      <div id="myecharts1"></div>
+      <!-- <div id="myecharts1"></div> -->
 
       <div id="myecharts"></div>
     </el-card>
@@ -21,11 +25,19 @@
         <el-table-column prop="belongto" label="指派"> </el-table-column>
         <el-table-column prop="label" label="标签"> </el-table-column>
         <el-table-column prop="degree" label="优先级"> </el-table-column>
-        <el-table-column prop="end_time" label="日期" sortable column-key="date"> </el-table-column>
+        <el-table-column
+          prop="end_time"
+          label="日期"
+          sortable
+          column-key="date"
+        >
+        </el-table-column>
         <el-table-column prop="details" label="任务详情"> </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" v-if="scope.row.type == 1">已修复</el-button>
+            <el-button type="primary" v-if="scope.row.type == 1"
+              >已修复</el-button
+            >
             <el-button type="dangers" v-else>待修复</el-button>
           </template>
         </el-table-column>
@@ -47,34 +59,9 @@ export default {
   },
   methods: {
     ...mapActions(["queryOwnBug", "queryUser"]),
-    queryBugInfo() {
-      let that = this;
-      this.queryOwnBug({
-        callback({ params: { result: { msg }, }, }) {
-          if (typeof msg == "object") {
-            that.tableall = msg.length;
-            msg.forEach((el) => {
-              that.tableData.push({
-                idnumber: el.id,
-                belongto: el.belongto,
-                label: el.label,
-                degree: el.degree,
-                end_time: that.dayjs(el.end_time).format("YYYY-MM-DD"),
-                details: el.details,
-                status: el.status,
-              });
-            });
-          }
-          let data = that.tableData.filter((el) => {
-            return el.status == "1";
-          });
-          that.tablejie = data.length;
-        },
-      });
-    },
   },
   created() {
-    this.queryBugInfo();
+    // this.queryBugInfo();
   },
   tableRowClassName({ rowIndex }) {
     if (rowIndex === 0) {
@@ -86,80 +73,70 @@ export default {
   },
 
   mounted() {
-    var myChart = echarts.init(document.getElementById("myecharts"));
-    var myChart1 = echarts.init(document.getElementById("myecharts1"));
-    var option = {
-      tooltip: {
-        trigger: "item",
-      },
-      legend: {
-        top: "5%",
-        left: "center",
-      },
-      series: [
-        {
-          type: "pie",
-          radius: ["50%", "60%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: "30",
-              fontWeight: "bold",
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data: [
-            { value: 1, name: "未完成" },
-
-            { value: 4, name: "已完成" },
-          ],
+    let that = this;
+    this.queryOwnBug({
+      callback({
+        params: {
+          result: { msg },
         },
-      ],
-    };
-    var option1 = {
-      tooltip: {
-        trigger: "item",
-      },
-      legend: {
-        top: "5%",
-        left: "center",
-      },
-      series: [
-        {
-          type: "pie",
-          radius: ["50%", "60%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: "center",
+      }) {
+        if (typeof msg == "object") {
+          that.tableall = msg.length;
+          msg.forEach((el) => {
+            that.tableData.push({
+              idnumber: el.id,
+              belongto: el.belongto,
+              label: el.label,
+              degree: el.degree,
+              end_time: that.dayjs(el.end_time).format("YYYY-MM-DD"),
+              details: el.details,
+              status: el.status,
+            });
+          });
+        }
+        let data = that.tableData.filter((el) => {
+          return el.status == "1";
+        });
+        that.tablejie = data.length;
+        var myChart = echarts.init(document.getElementById("myecharts"));
+        var option = {
+          tooltip: {
+            trigger: "item",
           },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: "30",
-              fontWeight: "bold",
-            },
+          legend: {
+            top: "5%",
+            left: "center",
           },
-          labelLine: {
-            show: false,
-          },
-          data: [
-            { value: 9, name: "未完成" },
+          series: [
+            {
+              type: "pie",
+              radius: ["50%", "60%"],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: "center",
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: "30",
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                { value: that.tableall - that.tablejie, name: "未完成" },
 
-            { value: 1, name: "已完成" },
+                { value: that.tablejie, name: "已完成" },
+              ],
+            },
           ],
-        },
-      ],
-    };
-    option1 && myChart1.setOption(option1);
-    option && myChart.setOption(option);
+        };
+        option && myChart.setOption(option);
+      },
+    });
   },
 };
 </script>
@@ -190,19 +167,22 @@ export default {
   width: 300px;
   height: 100%;
   position: absolute;
+  left: 0;
   right: 0;
   top: 0;
+  margin: auto;
   border-left: 1px solid #3333;
+  border-right: 1px solid #3333;
 }
 
-#myecharts1 {
+/* #myecharts1 {
   width: 300px;
   height: 100%;
   position: absolute;
   right: 300px;
   top: 0;
   border-left: 1px solid #3333;
-}
+} */
 
 .text,
 .text1 {
