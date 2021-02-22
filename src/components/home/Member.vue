@@ -32,10 +32,33 @@
     </div>
 
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-      <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-      <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+      <el-tab-pane label="用户管理" name="first" v-if="buttonPermission">用户管理</el-tab-pane>
+      <el-tab-pane label="开发" name="second">
+        <el-table :data="tableData" stripe style="width: 100%" @row-click="showDrawer">
+          <el-table-column prop="id" label="编号" width="120">
+          </el-table-column>
+          <el-table-column prop="account" label="用户名" width="140">
+          </el-table-column>
+          <el-table-column prop="username" label="账号" width="360">
+          </el-table-column>
+          <el-table-column prop="contact" label="联系方式">
+          </el-table-column>
+          <el-table-column prop="status" label="账户状态">
+          </el-table-column>
+          <el-table-column prop="registerTime" label="注册时间">
+          </el-table-column>
+          <el-table-column prop="registerTime" label="结束时间">
+          </el-table-column>
+          <el-table-column prop="describer" label="描述">
+          </el-table-column>
+        </el-table>
+        <el-pagination background layout="prev, pager, next" :total="1000">
+        </el-pagination>
+      </el-tab-pane>
+      <el-tab-pane label="测试" name="third">测试</el-tab-pane>
+      <el-tab-pane label="运维" name="fourth">运维</el-tab-pane>
+      <el-tab-pane label="需求" name="fifth">需求</el-tab-pane>
+      <el-tab-pane label="三方" name="sixth">三方</el-tab-pane>
     </el-tabs>
 
     <el-dialog title="新增成员" :visible.sync="dialogFormVisible" width="30%">
@@ -69,6 +92,10 @@
         <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='700px'>
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 
@@ -82,6 +109,8 @@ export default {
         status: '',
         desciber: ''
       },
+      drawer: false,
+      activeName: 'second',
       buttonPermission: '',
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -92,12 +121,113 @@ export default {
         teamType: '',
         activation: '1'
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      tableData: [{
+        id: 1,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 2,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 3,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 4,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 5,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 6,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 7,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 8,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 9,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 10,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 11,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }, {
+        id: 12,
+        account: '范鸿宇',
+        username: 'fanhngyu126@126.com',
+        contact: '13426192877',
+        status: '正常',
+        registerTime: '2020-02-22',
+        describer: '注册'
+      }]
     };
   },
   methods: {
     dialogTableControl() {
       this.dialogFormVisible = true
+    },
+    showDrawer(row) {
+      console.log(row);
+      this.drawer = true
     }
   },
   created() {
@@ -108,6 +238,7 @@ export default {
 
 <style scoped>
 .content {
+  box-sizing: border-box;
   padding: 24px;
 }
 .del {
@@ -132,6 +263,13 @@ h3.title {
   width: 100%;
   box-sizing: border-box;
 }
+
+.el-pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 .options > div {
   margin-right: 20px;
 }

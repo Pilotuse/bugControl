@@ -3,16 +3,12 @@
     <h3>概览报表</h3>
     <el-card class="box-card box">
       <div class="text">
-        问题总数
-        <p>10</p>
+        问题总数 <p>{{ tableall }}</p>
       </div>
-      <div class="text">
-        已完成
-        <p>1</p>
+      <div class="text"> 已完成 <p>{{ tablejie }}</p>
       </div>
-      <div class="text1">
-        未完成
-        <p>9</p>
+      <div class="text1"> 未完成
+        <p>{{ tableall - tablejie }}</p>
       </div>
       <div id="myecharts1"></div>
 
@@ -52,29 +48,16 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      tableall: "",
+      tablejie: "",
       tableData: [],
     };
   },
   methods: {
     ...mapActions(["queryBugOrder", "queryUser"]),
-    queryBugInfo() {
-      let that = this;
-      this.queryBugOrder({
-        callback({ params: { result: { msg } } }) {
-          if (typeof msg == "object") {
-            msg.forEach(el => {
-              that.tableData.push({
-                idnumber: el.id, belongto: el.belongto, label: el.label, degree: el.degree, end_time: that.dayjs(el.end_time).format('YYYY年MM月DD'), details: el.details
-              })
-            })
-          }
-          console.log(that.tableData);
-        },
-      });
-    },
   },
   created() {
-    this.queryBugInfo();
+    // this.queryBugInfo();
   },
   tableRowClassName({ rowIndex }) {
     if (rowIndex === 0) {
@@ -86,81 +69,65 @@ export default {
   },
 
   mounted() {
-    var myChart = echarts.init(document.getElementById("myecharts"));
-    var myChart1 = echarts.init(document.getElementById("myecharts1"));
+    let that = this;
 
-    var option = {
-      tooltip: {
-        trigger: "item",
-      },
-      legend: {
-        top: "5%",
-        left: "center",
-      },
-      series: [
-        {
-          type: "pie",
-          radius: ["50%", "60%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: "center",
+    this.queryBugOrder({
+      callback({ params: { result: { msg }, }, }) {
+        if (typeof msg == "object") {
+          that.tableall = msg.length;
+          msg.forEach((el) => {
+            that.tableData.push({
+              idnumber: el.id,
+              belongto: el.belongto,
+              label: el.label,
+              degree: el.degree,
+              end_time: el.end_time,
+              details: el.details,
+              status: el.status,
+            });
+          });
+        }
+        // console.log(that.tableData);
+        let data = that.tableData.filter((el) => el.status == "1");
+        that.tablejie = data.length;
+        var myChart = echarts.init(document.getElementById("myecharts"));
+        var option = {
+          tooltip: {
+            trigger: "item",
           },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: "30",
-              fontWeight: "bold",
+          legend: {
+            top: "5%",
+            left: "center",
+          },
+          series: [
+            {
+              type: "pie",
+              radius: ["50%", "60%"],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: "center",
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: "30",
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                { value: that.tableall - that.tablejie, name: "未完成" },
+                { value: that.tablejie, name: "已完成" },
+              ],
             },
-          },
-          labelLine: {
-            show: false,
-          },
-          data: [
-            { value: 9, name: "未完成" },
-
-            { value: 1, name: "已完成" },
           ],
-        },
-      ],
-    };
-    var option1 = {
-      tooltip: {
-        trigger: "item",
+        };
+        option && myChart.setOption(option);
       },
-      legend: {
-        top: "5%",
-        left: "center",
-      },
-      series: [
-        {
-          type: "pie",
-          radius: ["50%", "60%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: "30",
-              fontWeight: "bold",
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data: [
-            { value: 9, name: "未完成" },
-
-            { value: 1, name: "已完成" },
-          ],
-        },
-      ],
-    };
-    option1 && myChart1.setOption(option1);
-    option && myChart.setOption(option);
+    });
   },
 };
 </script>
