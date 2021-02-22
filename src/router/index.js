@@ -78,6 +78,14 @@ const routes = [
           title: 'Quality Center - 统计',
           isLogin: true
         }
+      }, {
+        path: 'demandapi',
+        name: 'demandapi',
+        component: () => import('../components/other/DemandAPI.vue'),
+        meta: {
+          title: 'Quality Center - api文档',
+          isLogin: true
+        }
       },
       {
         path: 'member',
