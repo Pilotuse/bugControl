@@ -25,19 +25,12 @@
         <el-table-column prop="belongto" label="指派"> </el-table-column>
         <el-table-column prop="label" label="标签"> </el-table-column>
         <el-table-column prop="degree" label="优先级"> </el-table-column>
-        <el-table-column
-          prop="end_time"
-          label="日期"
-          sortable
-          column-key="date"
-        >
+        <el-table-column prop="end_time" label="日期" sortable column-key="date">
         </el-table-column>
         <el-table-column prop="details" label="任务详情"> </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" v-if="scope.row.type == 1"
-              >已修复</el-button
-            >
+            <el-button type="primary" v-if="scope.row.type == 1">已修复</el-button>
             <el-button type="dangers" v-else>待修复</el-button>
           </template>
         </el-table-column>
@@ -167,12 +160,10 @@ export default {
   width: 300px;
   height: 100%;
   position: absolute;
-  left: 0;
   right: 0;
   top: 0;
   margin: auto;
-  border-left: 1px solid #3333;
-  border-right: 1px solid #3333;
+  border-left: 1px solid #e7e7e7;
 }
 
 /* #myecharts1 {
