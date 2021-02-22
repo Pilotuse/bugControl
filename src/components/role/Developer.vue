@@ -67,42 +67,9 @@ export default {
   },
   methods: {
     ...mapActions(["queryBugOrder", "queryUser"]),
-    queryBugInfo() {
-      let that = this;
-      this.queryBugOrder({
-        callback({
-          params: {
-            result: { msg },
-          },
-        }) {
-          if (typeof msg == "object") {
-            that.tableall = msg.length;
-            // console.log(msg.length);
-
-            msg.forEach((el) => {
-              that.tableData.push({
-                idnumber: el.id,
-                belongto: el.belongto,
-                label: el.label,
-                degree: el.degree,
-                end_time: el.end_time,
-                details: el.details,
-                status: el.status,
-              });
-            });
-          }
-          console.log(that.tableData);
-          let data = that.tableData.filter((el) => {
-            return el.status == "1";
-          });
-          console.log(data.length);
-          that.tablejie = data.length;
-        },
-      });
-    },
   },
   created() {
-    this.queryBugInfo();
+    // this.queryBugInfo();
   },
   tableRowClassName({ rowIndex }) {
     if (rowIndex === 0) {
@@ -114,80 +81,74 @@ export default {
   },
 
   mounted() {
-    var myChart = echarts.init(document.getElementById("myecharts"));
-    var myChart1 = echarts.init(document.getElementById("myecharts1"));
-    var option = {
-      tooltip: {
-        trigger: "item",
-      },
-      legend: {
-        top: "5%",
-        left: "center",
-      },
-      series: [
-        {
-          type: "pie",
-          radius: ["50%", "60%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: "30",
-              fontWeight: "bold",
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data: [
-            { value: 1, name: "未完成" },
+    let that = this;
 
-            { value: 4, name: "已完成" },
-          ],
+    this.queryBugOrder({
+      callback({
+        params: {
+          result: { msg },
         },
-      ],
-    };
-    var option1 = {
-      tooltip: {
-        trigger: "item",
-      },
-      legend: {
-        top: "5%",
-        left: "center",
-      },
-      series: [
-        {
-          type: "pie",
-          radius: ["50%", "60%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: "30",
-              fontWeight: "bold",
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data: [
-            { value: 9, name: "未完成" },
+      }) {
+        if (typeof msg == "object") {
+          that.tableall = msg.length;
 
-            { value: 1, name: "已完成" },
+          msg.forEach((el) => {
+            that.tableData.push({
+              idnumber: el.id,
+              belongto: el.belongto,
+              label: el.label,
+              degree: el.degree,
+              end_time: el.end_time,
+              details: el.details,
+              status: el.status,
+            });
+          });
+        }
+        // console.log(that.tableData);
+        let data = that.tableData.filter((el) => {
+          return el.status == "1";
+        });
+
+        that.tablejie = data.length;
+
+        var myChart = echarts.init(document.getElementById("myecharts"));
+        var option = {
+          tooltip: {
+            trigger: "item",
+          },
+          legend: {
+            top: "5%",
+            left: "center",
+          },
+          series: [
+            {
+              type: "pie",
+              radius: ["50%", "60%"],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: "center",
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: "30",
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                { value: that.tableall - that.tablejie, name: "未完成" },
+                { value: that.tablejie, name: "已完成" },
+              ],
+            },
           ],
-        },
-      ],
-    };
-    option1 && myChart1.setOption(option1);
-    option && myChart.setOption(option);
+        };
+        option && myChart.setOption(option);
+      },
+    });
   },
 };
 </script>
