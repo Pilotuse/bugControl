@@ -64,7 +64,7 @@ export default {
           if (typeof msg == "object") {
             msg.forEach(el => {
               that.tableData.push({
-                idnumber: el.id, belongto: el.belongto, label: el.label, degree: el.degree, end_time: el.end_time, details: el.details
+                idnumber: el.id, belongto: el.belongto, label: el.label, degree: el.degree, end_time: that.dayjs(el.end_time).format('YYYY年MM月DD'), details: el.details
               })
             })
           }
