@@ -3,7 +3,7 @@
         <div class="body">
             <el-row>
                 <el-col :span="24" class="headers">
-                    <h3 class="title">任务与任务派发</h3>
+                    <h3 class="title">任务派发</h3>
                     <el-button type="primary" @click="dialogVisible = true">新建任务</el-button>
                 </el-col>
             </el-row>
@@ -114,7 +114,7 @@ export default {
             selected: { checked: [] },
             pickerOptions: {
                 disabledDate(time) {
-                     return time.getTime() < Date.now() - 8.64e7;
+                    return time.getTime() < Date.now() - 8.64e7;
                 }
             },
             options1: [
