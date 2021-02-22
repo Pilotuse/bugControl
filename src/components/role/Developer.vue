@@ -21,32 +21,23 @@
     <h3>任务中心</h3>
     <el-card class="box-card">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="taskname" label="任务名称" width="180">
-          {{ tableData.taskname }}
+        <el-table-column prop="idnumber" label="ID" width="180">
         </el-table-column>
-        <el-table-column prop="tasknumber" label="指派人员" width="180">
+        <el-table-column prop="belongto" label="指派" width="180">
         </el-table-column>
-        <el-table-column prop="taskdetail" label="标签设定" width="180">
+        <el-table-column prop="label" label="标签" width="180">
         </el-table-column>
-        <el-table-column prop="degree" label="重要程度" width="180">
+        <el-table-column prop="degree" label="优先级" width="180">
           <el-button type="danger">重要</el-button>
         </el-table-column>
 
-        <el-table-column
-          prop="cutoffday"
-          label="日期"
-          sortable
-          width="180"
-          column-key="date"
-        >
+        <el-table-column prop="end_time" label="日期" sortable width="180" column-key="date">
         </el-table-column>
-        <el-table-column prop="attachment" label="任务详情" width="300">
+        <el-table-column prop="details" label="任务详情" width="300">
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
-            <el-button type="primary" v-if="scope.row.type == 1"
-              >已修复</el-button
-            >
+            <el-button type="primary" v-if="scope.row.type == 1">已修复</el-button>
             <el-button type="dangers" v-else>待修复</el-button>
           </template>
         </el-table-column>
@@ -61,32 +52,23 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      tablelist: [],
-      tableData: [
-        {
-          taskname: "",
-          tasknumber: "",
-          cutoffday: "",
-          taskdetail: "",
-          degree: "",
-          address: "",
-          attachment: "",
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {
     ...mapActions(["queryBugOrder", "queryUser"]),
     queryBugInfo() {
       let that = this;
-
       this.queryBugOrder({
-        callback({
-          params: {
-            result: { msg },
-          },
-        }) {
-          that.library = typeof msg == "object" ? msg : "";
+        callback({ params: { result: { msg } } }) {
+          if (typeof msg == "object") {
+            msg.forEach(el => {
+              that.tableData.push({
+                idnumber: el.id, belongto: el.belongto, label: el.label, degree: el.degree, end_time: el.end_time, details: el.details
+              })
+            })
+          }
+          console.log(that.tableData);
         },
       });
     },
