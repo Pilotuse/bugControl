@@ -9,6 +9,18 @@ import dayjs from "dayjs"
 import VueI18n from 'vue-i18n'
 import './styles/iconfont.css'
 import './styles/normalize.css'
+
+import AMap from 'vue-amap';
+Vue.use(AMap);
+
+// 初始化vue-amap
+AMap.initAMapApiLoader({
+  // 高德key
+  key: 'd25328f514d63a7079b19f202ea6d395',
+  // 插件集合 （插件按需引入）
+  plugin: ['AMap.Geolocation']
+});
+
 Vue.prototype.dayjs = dayjs;//可以全局使用dayjs
 
 import 'github-markdown-css/github-markdown.css'
