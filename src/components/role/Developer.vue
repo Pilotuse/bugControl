@@ -14,7 +14,7 @@
             <template slot-scope="scope">
               <el-link type="warning" @click="changedrawer">{{
                 scope.row.details
-              }}</el-link>
+                }}</el-link>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -56,6 +56,7 @@
   export default {
     data() {
       return {
+        drawer: "",
         repairt: "",
         tableall: "",
         tablejie: "",
@@ -64,7 +65,9 @@
     },
     methods: {
       ...mapActions(["queryOwnBug", "queryUser"]),
-
+      changedrawer() {
+        this.drawer = true
+      },
       repair() {
         this.$confirm("是否确认修复完毕", "提示", {
           confirmButtonText: "确定",
