@@ -5,6 +5,7 @@
             <div class="canvas">
                 <el-card class="box-card">
                     <div class="desc">我的需求</div>
+                    <div id="myecharts1"></div>
                 </el-card>
                 <el-card class="box-card">
                     <div class="desc">问题总量</div>
@@ -47,154 +48,177 @@
             <span>我来啦!</span>
         </el-drawer>
     </div>
+
 </template>
 
 <script>
-import * as echarts from "echarts";
-export default {
-    mounted() {
-        var myChart = echarts.init(document.getElementById("myecharts"));
-        var option = {
-            color: ["#BA98FF"],
-            grid: {
-                x: 25,
-                y: 45,
-                x2: 5,
-                y2: 20,
-                borderWidth: 1
-            },
-            xAxis: {
-                type: "category",
-                show: false
-            },
-            yAxis: {
-                type: "value",
-                show: false
-            },
-            series: [{
-                data: [50, 30, 20, 80],
-                type: "line",
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        label: { show: true },
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [{ offset: 0, color: '#000' },
-                            { offset: 0.5, color: '#888' },
-                            { offset: 1, color: '#ddd' }]
-                        )
-                    }
-                }
-            }]
-        };
-        option && myChart.setOption(option);
-    },
-    data() {
-        return {
-            drawer: false,
-            activeName: '1',
-            tableData: [{
-                id: '202102202353001',
-                title: '页面布局错位',
-                data: '2021年2月20日23:56:24',
-                person: '嘻嘻'
-            }, {
-                id: '202102202353001',
-                title: '数据展示存在异常',
-                data: '2021年2月20日23:56:24',
-                person: '嘻嘻'
+    import * as echarts from "echarts";
 
-            }, {
-                id: '202102202353001',
-                title: '登录成功后跳转异常',
-                data: '2021年2月20日23:56:24',
-                person: '嘻嘻'
-            }, {
-                id: '202102202353001',
-                title: '异常提示不准确',
-                data: '2021年2月20日23:56:24',
-                person: '嘻嘻'
-            }]
-        };
-    },
-    methods: {
-        handleClick() { },
-        findData() {
-            this.drawer = true
-        }
-    },
-};
+    export default {
+        mounted() {
+            var myChart = echarts.init(document.getElementById("myecharts"));
+            var myChart1 = echarts.init(document.getElementById("myecharts1"));
+            var option = {
+                color: ["#BA98FF"],
+                grid: {
+                    x: 25,
+                    y: 45,
+                    x2: 5,
+                    y2: 20,
+                    borderWidth: 1
+                },
+                xAxis: {
+                    type: "category",
+                    show: false
+                },
+                yAxis: {
+                    type: "value",
+                    show: false
+                },
+                series: [{
+                    data: [50, 30, 20, 80],
+                    type: "line",
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            label: { show: true },
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [{ offset: 0, color: '#000' },
+                                { offset: 0.5, color: '#888' },
+                                { offset: 1, color: '#ddd' }]
+                            )
+                        }
+                    }
+                }]
+            };
+            var option1 = {
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+            myChart.setOption(option);
+            myChart1.setOption(option1);
+
+
+        },
+        data() {
+            return {
+                drawer: false,
+                activeName: '1',
+                tableData: [{
+                    id: '202102202353001',
+                    title: '页面布局错位',
+                    data: '2021年2月20日23:56:24',
+                    person: '嘻嘻'
+                }, {
+                    id: '202102202353001',
+                    title: '数据展示存在异常',
+                    data: '2021年2月20日23:56:24',
+                    person: '嘻嘻'
+
+                }, {
+                    id: '202102202353001',
+                    title: '登录成功后跳转异常',
+                    data: '2021年2月20日23:56:24',
+                    person: '嘻嘻'
+                }, {
+                    id: '202102202353001',
+                    title: '异常提示不准确',
+                    data: '2021年2月20日23:56:24',
+                    person: '嘻嘻'
+                }]
+            };
+        },
+        methods: {
+            handleClick() { },
+            findData() {
+                this.drawer = true
+            }
+        },
+    };
 </script>
 <style scoped>
-.container {
-    padding: 24px;
-}
+    .container {
+        padding: 24px;
+    }
 
-.box-card {
-    margin-top: 10px;
-    width: 340px !important;
-    height: 200px !important;
-    background: #e3f4ff;
-    border: 1px solid #c2daeb;
-    color: #005980;
-}
+    .box-card {
+        margin-top: 10px;
+        width: 340px !important;
+        height: 200px !important;
+        background: #e3f4ff;
+        border: 1px solid #c2daeb;
+        color: #005980;
+    }
 
-.box-card:hover {
-    border: 1px solid #8ed2ff;
-    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
-        0 4px 15px 0 rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.2);
-}
+    .box-card:hover {
+        border: 1px solid #8ed2ff;
+        -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+            0 4px 15px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.2);
+    }
 
-.box-card:last-child {
-    margin-right: 0;
-}
+    .box-card:last-child {
+        margin-right: 0;
+    }
 
-.el-card__body {
-    padding: 0 !important;
-    position: relative;
-}
+    .el-card__body {
+        padding: 0 !important;
+        position: relative;
+    }
 
-.el-drawer__body {
-    padding-top: 46px !important;
-}
+    .el-drawer__body {
+        padding-top: 46px !important;
+    }
 
-h3.title {
-    margin: 10px 0;
-    font-size: 20px;
-    color: rgba(0, 0, 0, 0.8);
-}
+    h3.title {
+        margin: 10px 0;
+        font-size: 20px;
+        color: rgba(0, 0, 0, 0.8);
+    }
 
-.el-table td,
-.el-table th {
-    padding: 10px 0;
-}
-
-
-#myecharts {
-    width: 100%;
-    height: 250px;
-    opacity: 0.7;
-}
+    .el-table td,
+    .el-table th {
+        padding: 10px 0;
+    }
 
 
-.canvas {
-    display: flex;
-    flex-wrap: wrap;
-}
-.canvas > div {
-    margin-right: 20px;
-}
+    #myecharts,
+    #myecharts1 {
+        width: 100%;
+        height: 250px;
+        opacity: 0.7;
+    }
 
 
-.desc {
-    position: absolute;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 4px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
+    .canvas {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .canvas>div {
+        margin-right: 20px;
+    }
+
+
+    .desc {
+        position: absolute;
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 </style>
