@@ -67,6 +67,27 @@ export default {
   },
   methods: {
     ...mapActions(["queryOwnBug", "queryUser"]),
+    repair() {
+      this.$confirm("是否确认修复完毕", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "修复成功!",
+            center: true,
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消",
+            center: true,
+          });
+        });
+    },
   },
   created() {
     // this.queryBugInfo();
