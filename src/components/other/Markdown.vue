@@ -1,10 +1,11 @@
 <template>
   <div id="editor">
-    <mavon-editor style="height: 100%" :toolbars="toolbars"></mavon-editor>
+    <mavon-editor style="height: 100%" :toolbars="toolbars" v-model="value" @save="saveinfo"></mavon-editor>
   </div>
 </template>
 <script>
 import { mavonEditor } from 'mavon-editor'
+import { mapMutations } from 'vuex'
 import 'mavon-editor/dist/css/index.css'
 export default {
   name: 'editor',
@@ -13,6 +14,7 @@ export default {
   },
   data() {
     return {
+      value: '',
       toolbars: {
         bold: true, // 粗体
         italic: true, // 斜体
@@ -49,6 +51,18 @@ export default {
         preview: true, // 预览
       },
     }
+  },
+  methods: {
+    ...mapMutations(["changeMarkdownValue"]),
+    saveinfo() {
+      this.$message.success({ message: '数据保存成功', customClass: 'message-box' });
+      this.$emit("markdownsave")
+    }
+  },
+  watch: {
+    value(newValue) {
+      this.changeMarkdownValue(newValue)
+    }
   }
 }
 </script>
@@ -67,5 +81,9 @@ export default {
 
 .v-note-wrapper .v-note-op .v-right-item {
   max-width: 26% !important;
+}
+
+.message-box {
+  margin-top: 40px !important;
 }
 </style>

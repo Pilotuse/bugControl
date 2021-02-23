@@ -7,6 +7,7 @@
           <el-button type="primary" @click="dialogVisible = true">新建任务</el-button>
         </el-col>
       </el-row>
+
       <el-row>
         <el-col :span="10" class="search">
           <el-select v-model="screen.sortby" multiple placeholder="排序方式">
@@ -97,23 +98,25 @@
     <div class="analysis">
       <h4 class="title">概览报表</h4>
     </div>
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='62%' :modal="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size='62%' @close="MdContainerStatus('close')">
       <div class="drawer-container">
-        <bugorderdetails :bugordershow="bugordershow" @closeMask="closeMask"></bugorderdetails>
+        <bugorderdetails :bugordershow="bugordershow" :markdowncontainer="markdownContainer" @closeMask="closeMask" @mdcontainerstatus="MdContainerStatus">
+        </bugorderdetails>
       </div>
     </el-drawer>
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import bugorderdetails from '../other/BugOrderDetails'
 export default {
   data() {
     return {
+      drawer: false,
       dialogVisible: false,
+      markdownContainer: false,
       developer: [],
       screen: { lable: '', sortby: '', search: '' },
-      drawer: false,
       selected: { checked: [] },
       pickerOptions: {
         disabledDate(time) {
@@ -121,58 +124,28 @@ export default {
         }
       },
       options1: [
-        { id: 1, value: "选项1", label: "重要程度", },
-        { id: 2, value: "选项2", label: "到期时间", }
+        { id: 1, value: "选项1", label: "优先级", },
+        { id: 2, value: "选项2", label: "处理人", }
       ],
-      options2: [{
-        id: 1,
-        value: "选项1",
-        label: "bug",
-      },
-      {
-        id: 2,
-        value: "选项2",
-        label: "需求",
-      },
-      {
-        id: 3,
-        value: "选项2",
-        label: "样式",
-      },
-      {
-        id: 4,
-        value: "选项2",
-        label: "兼容",
-      }],
+      options2: [
+        { id: 1, value: "选项1", label: "bug", },
+        { id: 2, value: "选项2", label: "需求", },
+        { id: 3, value: "选项3", label: "样式" },
+        { id: 4, value: "选项4", label: "兼容" },
+        { id: 5, value: "选项5", label: "其他" }
+      ],
       library: [],
       bugordershow: [],
       flagtask: false,
-      ruleForm: {
-        taskname: "", //名称
-        handler: "",  // 处理人
-        endtime: "",  // 结束时间
-        label: [],   // 标签
-        degree: "",  // 程度
-        details: "",  // 详情
-      },
+      ruleForm: { taskname: "", handler: "", endtime: "", label: [], degree: "", details: "", },
       rules: {
         taskname: [
           { required: true, message: "请输入标题", trigger: "blur" },
           { min: 3, max: 20, message: "长度在 3 到 20 个字符", trigger: "blur" }
         ],
         handler: [{ required: true, message: "请选择实际处理人", trigger: "change" }],
-        endtime: [{
-          type: "date",
-          required: true,
-          message: "请选择日期",
-          trigger: "change",
-        }],
-        label: [{
-          type: "array",
-          required: true,
-          message: "请至少选择一个标签",
-          trigger: "change",
-        }],
+        endtime: [{ type: "date", required: true, message: "请选择日期", trigger: "change" }],
+        label: [{ type: "array", required: true, message: "请至少选择一个标签", trigger: "change" }],
         degree: [{ required: true, message: "请选择优先级", trigger: "change" }],
         details: [{ required: true, message: "请填写详细信息，以方便开发迅速定位", trigger: "blur" }],
       },
@@ -196,6 +169,17 @@ export default {
     },
     closeMask() {
       this.drawer = false
+      this.MdContainerStatus('close')
+    },
+    MdContainerStatus(type) {
+      // this.markdownContainer = type == "save" ? false : type == "close" ? false : type == "open" ? true : false
+      if (type == "save") {
+        this.markdownContainer = false;
+      } else if (type == "close") {
+        this.markdownContainer = false;
+      } else if (type == "open") {
+        this.markdownContainer = true;
+      }
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -257,6 +241,9 @@ export default {
   },
   components: {
     bugorderdetails
+  },
+  computed: {
+    ...mapState(["markdownValue"])
   }
 };
 </script>

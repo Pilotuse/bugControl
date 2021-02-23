@@ -9,7 +9,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loginUserType: '',
-    showModule: 'dashboard'
+    showModule: 'dashboard',
+    markdownValue: ''
   },
   mutations: {
     changeUserType(state, playload) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     changeShowModule(state, playload) {
       state.showModule = playload
+    },
+    changeMarkdownValue(state, playload) {
+      state.markdownValue = playload
     }
   },
   actions: {

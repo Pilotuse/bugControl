@@ -132,4 +132,8 @@ export default {
   background: #6c63ff;
   color: #dcdde1;
 }
+
+.el-dropdown {
+  cursor: pointer;
+}
 </style>

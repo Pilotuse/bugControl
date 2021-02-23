@@ -24,12 +24,12 @@
         </el-dropdown-menu>
       </el-dropdown>
 
-      <el-dropdown @command="issueDegreeCall">
-        <el-button :style="{color:issueDegreeDescriber.style}" style="font-size:12px;">
-          <i class="iconfont icon-tag" style="margin-right:8px;font-size:12px;" :style="issueDegreeDescriber.style"></i> {{issueDegreeDescriber.describer}}
+      <el-dropdown @command="issueTagCall">
+        <el-button :style="{color:issueTagDescriber.style}" style="font-size:12px;">
+          <i class="iconfont icon-tag" style="margin-right:8px;font-size:12px;" :style="issueTagDescriber.style"></i> {{issueTagDescriber.describer}}
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="item.command" v-for="item in issueDegree" :key="item.id" :style="{color:item.style}" style="font-size:12px;">
+          <el-dropdown-item :command="item.command" v-for="item in issueTag" :key="item.id" :style="{color:item.style}" style="font-size:12px;">
             <i class="iconfont icon-tag" style="margin-right:8px;font-size:12px;" :style="item.style"></i> {{item.describer}}
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -41,13 +41,33 @@
     <h4 class="title">任务信息</h4>
     <div class="issue-info">
       <span class="issue-id">#CQVC1</span>
-      <span class="create-time">创建于 2020-02-23</span>
+      <span class="create-time">您创建于 2020-02-23</span>
     </div>
 
     <div class="issue-describer" @dblclick="showMarkBox">
-      <span v-if="!markdownContainer">暂无数据</span>
-      <markdown v-if="markdownContainer"></markdown>
+      <span v-if="!markdowncontainer">
+        <i v-if="contentDate">暂无数据</i>
+        <div v-else>
+          <div class="markdown-body">
+            <VueMarkdown :source="markdownValue" v-highlight></VueMarkdown>
+          </div>
+        </div>
+      </span>
+      <markdown v-if="markdowncontainer" @markdownsave="markdownSave"></markdown>
     </div>
+    <el-divider></el-divider>
+    <span>
+      标签
+      <el-dropdown @command="issueTagCall">
+        <el-button type="danger" icon="el-icon-plus" class="el-dropdown-link" circle size="small"></el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item :command="item.command" v-for="item in issueTag" :key="item.id" :style="{color:item.style}" style="font-size:12px;">
+            <i class="iconfont icon-tag" style="margin-right:8px;font-size:12px;" :style="item.style"></i> {{item.describer}}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </span>
+
     <el-divider></el-divider>
 
   </div>
@@ -56,6 +76,9 @@
 
 <script>
 import markdown from './Markdown'
+import { mapState } from 'vuex'
+import VueMarkdown from 'vue-markdown'
+
 export default {
   data() {
     return {
@@ -75,10 +98,17 @@ export default {
         { id: 5, command: 'nan', describer: '无优先级', style: '#B0B0B0', status: false },
       ],
       issueDegreeDescriber: {},
-      markdownContainer: false
+      issueTag: [
+        { id: 1, command: 'bug', describer: 'BUG', style: '#34495e', status: false },
+        { id: 2, command: 'demand', describer: '需求', style: '#9b59b6', status: false },
+        { id: 3, command: 'style', describer: '样式', style: "#2ecc71", status: false },
+        { id: 4, command: 'Compatible', describer: '兼容', style: '#e74c3c', status: false }
+      ],
+      issueTagDescriber: {},
+      contentDate: true
     }
   },
-  props: ["bugordershow"],
+  props: ["bugordershow", "markdowncontainer"],
   methods: {
     hiddenMask() {
       this.$emit('closeMask')
@@ -89,13 +119,19 @@ export default {
     issueDegreeCall(command) {
       this.issueDegree.forEach(el => el.status = command == el.command ? true : false)
     },
+    issueTagCall(command) {
+      this.issueTag.forEach(el => el.status = command == el.command ? true : false)
+    },
     showMarkBox() {
-      console.log(111);
-      this.markdownContainer = true
+      this.$emit("mdcontainerstatus", 'open')
+    },
+    markdownSave() {
+      this.$emit("mdcontainerstatus", 'save')
     }
   },
   components: {
-    markdown
+    markdown,
+    VueMarkdown
   },
   watch: {
     issueState: {
@@ -109,11 +145,24 @@ export default {
       handler(newVal) {
         this.issueDegreeDescriber = newVal.filter(el => el.status)[0]
       }
+    },
+    issueTag: {
+      deep: true,
+      handler(newVal) {
+        this.issueTagDescriber = newVal.filter(el => el.status)[0]
+      }
+    },
+    markdownValue(newValue) {
+      if (newValue) this.contentDate = false
     }
   },
   created() {
     this.handleCommand('complete');
-    this.issueDegreeCall('serious')
+    this.issueDegreeCall('serious');
+    this.issueTagCall('bug')
+  },
+  computed: {
+    ...mapState(["markdownValue"])
   }
 }
 </script>
@@ -128,7 +177,7 @@ export default {
 .bug-pack-up {
   position: absolute;
   top: 50%;
-  left: -14px;
+  left: -20px;
   font-weight: 800;
   transform: translateY(-50%) rotate(180deg);
   cursor: pointer;
@@ -184,7 +233,8 @@ h4.title {
 }
 
 .issue-describer {
-  margin: 10px 0 20px 0;
+  margin: 12px 0 20px 0;
   font-size: 14px;
+  color: #8c92a4;
 }
 </style>

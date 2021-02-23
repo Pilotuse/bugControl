@@ -16,94 +16,94 @@
 </template>
 
 <script>
-  import headers from "../components/home/Header";
-  import { mapActions } from 'vuex'
-  export default {
-    name: 'Home',
-    components: {
-      headers
-    },
-    data() {
-      return {
-        navbar: [],
-        currentID: '1'
-      }
-    },
-    methods: {
-      ...mapActions(["getUserMenu"]),
-      getColorId(id) {
-        console.log(id);
-      }
-    },
-    created() {
-      this.getUserMenu({
-        callback: ({ params: { result: { msg } } }) => {
-          this.navbar = msg
-        }
-      })
+import headers from "../components/home/Header";
+import { mapActions } from 'vuex'
+export default {
+  name: 'Home',
+  components: {
+    headers
+  },
+  data() {
+    return {
+      navbar: [],
+      currentID: '1'
     }
+  },
+  methods: {
+    ...mapActions(["getUserMenu"]),
+    getColorId(id) {
+      console.log(id);
+    }
+  },
+  created() {
+    this.getUserMenu({
+      callback: ({ params: { result: { msg } } }) => {
+        this.navbar = msg
+      }
+    })
   }
+}
 </script>
 
 
 <style scoped lang="scss">
-  .navbar {
-    position: fixed;
-    top: 46px;
-    left: 0;
-    width: 60px;
-    height: 100%;
-    background: #f7f7f7;
-    z-index: 9999;
-  }
+.navbar {
+  position: fixed;
+  top: 46px;
+  left: 0;
+  width: 60px;
+  height: 100%;
+  background: #f7f7f7;
+  z-index: 2000;
+}
 
-  .navbar a {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    color: #95afc0;
-    text-decoration: none;
-    text-align: center;
-  }
+.navbar a {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  color: #95afc0;
+  text-decoration: none;
+  text-align: center;
+}
 
-  .navbar a i {
-    padding: 10px 0;
-    font-size: 20px;
-    width: 100%;
-    color: #95afc0;
-  }
+.navbar a i {
+  padding: 10px 0;
+  font-size: 20px;
+  width: 100%;
+  color: #95afc0;
+}
 
-  .navbar a div {
-    font-size: 12px;
-  }
+.navbar a div {
+  font-size: 12px;
+}
 
-  .context {
-    width: calc(100% - 60px);
-    height: calc(100vh - 46px);
-    position: absolute;
-    left: 60px;
-    top: 46px;
-    box-sizing: border-box;
-  }
+.context {
+  width: calc(100% - 60px);
+  height: calc(100vh - 46px);
+  position: absolute;
+  left: 60px;
+  top: 46px;
+  box-sizing: border-box;
+}
 
-  .context>div {
-    height: 100%;
-  }
+.context > div {
+  height: 100%;
+}
 
-  .router-link-exact-active.router-link-active {
+.router-link-exact-active.router-link-active {
+  color: #ff8f00 !important;
+
+  i {
     color: #ff8f00 !important;
-
-    i {
-      color: #ff8f00 !important;
-    }
-
-    div {
-      color: #ff8f00 !important;
-    }
   }
 
-  .el-dialog .el-dialog__body {
-    padding: 0 20px !important;
+  div {
+    color: #ff8f00 !important;
   }
+}
+
+.el-dialog .el-dialog__body {
+  padding: 0 20px !important;
+}
 </style>
