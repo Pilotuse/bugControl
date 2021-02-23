@@ -19,7 +19,13 @@
             column-key="date"
           >
           </el-table-column>
-          <el-table-column prop="details" label="任务详情"> </el-table-column>
+          <el-table-column prop="details" label="任务详情">
+            <template slot-scope="scope">
+              <el-link type="warning" @click="changedrawer">{{
+                scope.row.details
+              }}</el-link>
+            </template>
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button type="primary" v-if="scope.row.type == 1"
@@ -51,6 +57,9 @@
         <div id="myecharts"></div>
       </el-card>
     </div>
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false">
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 
@@ -60,6 +69,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      drawer: false,
       tableall: "",
       tablejie: "",
       tableData: [],
@@ -67,6 +77,9 @@ export default {
   },
   methods: {
     ...mapActions(["queryOwnBug", "queryUser"]),
+    changedrawer() {
+      this.drawer = true;
+    },
     repair() {
       this.$confirm("是否确认修复完毕", "提示", {
         confirmButtonText: "确定",
