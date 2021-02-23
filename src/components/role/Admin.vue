@@ -36,10 +36,11 @@
         <el-table-column prop="details" label="任务详情" width="300">
         </el-table-column>
         <el-table-column label="操作" width="180">
-          <template slot-scope="scope">
-            <el-button type="primary" v-if="scope.row.type == 1">已修复</el-button>
-            <el-button @click="open" type="dangers" v-else>待修复</el-button>
-          </template>
+          <span v-if="scope.row.type == 1">
+            <el-button type="success" @click="changetype(scope.row._id, 2)">已修复</el-button>
+          </span>
+          <el-button type="primary" v-else-if="scope.row.type == 2">已修复</el-button>
+          <el-button type="danger" v-else>未修复</el-button>
         </el-table-column>
       </el-table>
     </el-card>
