@@ -55,7 +55,7 @@ export default {
   methods: {
     ...mapMutations(["changeMarkdownValue"]),
     saveinfo() {
-      this.$message.success({ message: '数据保存成功', customClass: 'message-box' });
+      this.$message.success({ message: '详情修改成功！', customClass: 'message-box' });
       this.$emit("markdownsave")
     }
   },
