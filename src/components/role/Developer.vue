@@ -125,7 +125,7 @@ export default {
             },
           ],
         };
-        option && myChart.setOption(option);
+        option && myChart.setOption(option)
       },
     });
   },
