@@ -10,7 +10,13 @@
           <el-table-column prop="degree" label="优先级"> </el-table-column>
           <el-table-column prop="end_time" label="日期" sortable column-key="date">
           </el-table-column>
-          <el-table-column prop="details" label="任务详情"> </el-table-column>
+          <el-table-column prop="details" label="任务详情">
+            <template slot-scope="scope">
+              <el-link type="warning" @click="changedrawer">{{
+                scope.row.details
+              }}</el-link>
+            </template>
+          </el-table-column>
           <el-table-column label="操作">
             <el-button type="primary" v-if="repairt == 1">已修复</el-button>
             <el-button type="danger" v-else @click="repair">未修复</el-button>
@@ -38,6 +44,9 @@
         <div id="myecharts"></div>
       </el-card>
     </div>
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false">
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 

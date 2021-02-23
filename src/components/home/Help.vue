@@ -22,6 +22,10 @@
       >
       </el-input>
     </div>
+    <div>
+      <div>请给范鸿宇打分</div>
+      <el-rate v-model="value" show-text></el-rate>
+    </div>
   </div>
 </template>
 <script>
