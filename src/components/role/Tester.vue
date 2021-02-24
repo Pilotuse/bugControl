@@ -100,7 +100,7 @@
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size='62%' @close="MdContainerStatus('close')">
       <div class="drawer-container">
-        <bugorderdetails :bugordershow="bugordershow" :markdowncontainer="markdownContainer" @closeMask="closeMask" @mdcontainerstatus="MdContainerStatus">
+        <bugorderdetails :bugordershow="bugordershow" :markdowncontainer="markdownContainer" @closeMask="closeMask" @mdcontainerstatus="MdContainerStatus" @handeltagoptions="handelTagOptions" :bugorder="currentBugOrder">
         </bugorderdetails>
       </div>
     </el-drawer>
@@ -136,6 +136,8 @@ export default {
       ],
       library: [],
       bugordershow: [],
+      bugOrder: [],
+      currentBugOrder: {},
       flagtask: false,
       ruleForm: { taskname: "", handler: "", endtime: "", label: [], degree: "", details: "", },
       rules: {
@@ -163,9 +165,10 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    getIssueInfo(issueid) {
+    getIssueInfo() {
       this.drawer = true
-      this.bugordershow = this.library.filter(el => el.id == issueid)
+      this.bugordershow = this.bugOrder
+      // this.library.filter(el => el.id == issueid)  issueid
     },
     closeMask() {
       this.drawer = false
@@ -179,6 +182,20 @@ export default {
         this.markdownContainer = false;
       } else if (type == "open") {
         this.markdownContainer = true;
+      }
+    },
+    handelTagOptions({ command, orderid, type } = {}) {
+      let labelDate = this.bugOrder.filter(el => el.id = orderid)[0].label
+      if (type == 'add') {
+        // 查找去重，合并
+        labelDate.push(command)
+        let unique = (sort) => {
+          const res = new Map();
+          return sort.filter((a) => !res.has(a.id) && res.set(a.id, 1))
+        }
+        this.bugOrder.filter(el => el.id = orderid)[0].label = unique(labelDate)
+      } else if (type == 'del') {
+        this.bugOrder.filter(el => el.id = orderid)[0].label = labelDate.filter(el => el.id != command)
       }
     },
     submitForm(formName) {
@@ -212,7 +229,7 @@ export default {
             that.library = msg.map(el => {
               return {
                 id: el.id,
-                createdate: that.dayjs(el.create_date).format('YYYYMMDD'),
+                createdate: that.dayjs(el.create_date).format('YYYY-MM-DD'),
                 degree: el.degree,
                 label: el.label.split(','),
                 details: el.details,
@@ -237,7 +254,126 @@ export default {
         if (typeof msg == 'object') msg.forEach(el => that.developer.push(el.username))
       }
     });
-    this.queryBugInfo()
+    this.queryBugInfo();
+    this.bugOrder = JSON.parse(`[
+    {
+        "id":1,
+        "createdate":"2021-02-22",
+        "degree":"serious",
+        "label":[
+            {
+                "id":1,
+                "command":"bug",
+                "describer":"BUG",
+                "style":"#34495e",
+                "status":false
+            },
+            {
+                "id":2,
+                "command":"demand",
+                "describer":"需求",
+                "style":"#9b59b6",
+                "status":false
+            },
+            {
+                "id":3,
+                "command":"style",
+                "describer":"样式",
+                "style":"#2ecc71",
+                "status":false
+            },
+            {
+                "id":4,
+                "command":"Compatible",
+                "describer":"兼容",
+                "style":"#e74c3c",
+                "status":false
+            }
+        ],
+        "details":"*代码数据存在异常*",
+        "status":"1",
+        "taskname":"工作台canvas展示样式不优美",
+        "endtime":"02.22 ~ 02.27",
+        "handler":"1056312367@163.com",
+        "course":[
+            {
+                "sort_id":1,
+                "course_name":"BUG单创建并派发成功",
+                "handler":"范鸿宇",
+                "effect_date":"2020-02-24 09:17",
+                "description":"null"
+            },
+             {
+                "sort_id":2,
+                "course_name":"待接收任务",
+                "handler":"王杰",
+                "effect_date":"2020-02-24 09:18",
+                "description":"null"
+            },{
+                "sort_id":3,
+                "course_name":"任务已接受，修复中",
+                "handler":"王杰",
+                "effect_date":"2020-02-24 09:18",
+                "description":"null"
+            },{
+                "sort_id":4,
+                "course_name":"任务测试中",
+                "handler":"潘琰",
+                "effect_date":"2020-02-24 09:20",
+                "description":"null"
+            },{
+                "sort_id":5,
+                "course_name":"测试不通过",
+                "handler":"潘琰",
+                "effect_date":"2020-02-24 09:22",
+                "description":"null"
+            },{
+                "sort_id":6,
+                "course_name":"任务已回退",
+                "handler":"系统",
+                "effect_date":"2020-02-24 09:22",
+                "description":"null"
+            },{
+                "sort_id":7,
+                "course_name":"正在修复中",
+                "handler":"王杰",
+                "effect_date":"2020-02-24 09:23",
+                "description":"null"
+            },{
+                "sort_id":8,
+                "course_name":"修复完成，待验收",
+                "handler":"王杰",
+                "effect_date":"2020-02-24 09:23",
+                "description":"null"
+            },{
+                "sort_id":9,
+                "course_name":"任务测试中",
+                "handler":"王杰",
+                "effect_date":"2020-02-24 09:23",
+                "description":"null"
+            },{
+                "sort_id": 10,
+                "course_name":"测试完成，通过",
+                "handler":"潘琰",
+                "effect_date":"2020-02-24 09:23",
+                "description":"null"
+            },{
+                "sort_id": 11,
+                "course_name":"已验收",
+                "handler":"范鸿宇",
+                "effect_date":"2020-02-24 09:23",
+                "description":"null"
+            },{
+                "sort_id": 12,
+                "course_name":"任务流程结束",
+                "handler":"系统",
+                "effect_date":"2020-02-24 09:23",
+                "description":"null"
+            }
+        ]
+    }
+]`)
+    this.currentBugOrder = this.bugOrder[0]
   },
   components: {
     bugorderdetails

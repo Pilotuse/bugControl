@@ -44,6 +44,7 @@
       </el-card>
       <el-card class="box-card" shadow="hover">
         Vue
+        新增直播技术分享
         <i class="iconfont icon-Vue"></i>
       </el-card>
       <el-card class="box-card" shadow="hover">
