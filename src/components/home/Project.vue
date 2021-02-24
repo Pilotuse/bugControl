@@ -1,16 +1,6 @@
 <template>
   <div class="content">
     <h3 class="title">项目中心</h3>
-    <div class="banben">
-      <div>
-        <p>当前版本</p>
-        <i class="el-icon-apple"></i>
-      </div>
-      <div>
-        <p>历史版本</p>
-        <i class="el-icon-pear"></i>
-      </div>
-    </div>
   </div>
 </template>
 
