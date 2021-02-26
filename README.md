@@ -19,9 +19,11 @@ http://kazupon.github.io/vue-i18n/zh/installation.html#yarn
 ## 已经配置的东西
 
 Excel 插件配置
-axios 请求配置
+axios 拦截器配置
 VueI18n 多语言配置
 normalize 初始化css 配置 ，文件在 styles中
+v-amap 高德地图
+
 
 
 ## 建议

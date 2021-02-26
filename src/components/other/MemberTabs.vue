@@ -19,8 +19,8 @@
       </el-table-column>
     </el-table>
     <el-pagination background layout="prev, pager, next" :total="totalCase" :page-size="12" @current-change="handleCurrentChange"></el-pagination>
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='700px'>
-      <span>我来啦!</span>
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='800px'>
+      <div class="drawer-content">我来啦!</div>
     </el-drawer>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
       totalCase: 20,
       drawer: false,
       tableData: [{
-        id: 1,
+        id: 'wsit-001',
         account: '范鸿宇',
         username: 'fanhngyu126@126.com',
         contact: '13426192877',
@@ -149,5 +149,12 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+
+.drawer-content {
+  padding: 60px 20px 20px 30px;
+  background: #000;
+  width: 100%;
+  height: 100%;
 }
 </style>
