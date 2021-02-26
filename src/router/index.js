@@ -76,7 +76,8 @@ const routes = [
         component: () => import('../components/home/Statistics.vue'),
         meta: {
           title: 'Quality Center - 统计',
-          isLogin: true
+          isLogin: true,
+          author:["admin"]
         }
       }, {
         path: 'demandapi',
@@ -120,6 +121,15 @@ const routes = [
             component: () => import('../components/micoChat/Contact.vue'),
             meta: {
               title: 'Quality Center - 同事',
+              isLogin: true
+            },
+          },
+          {
+            path: 'meeting',
+            name: 'meeting',
+            component: () => import('../components/micoChat/Meeting.vue'),
+            meta: {
+              title: 'Quality Center - 会议',
               isLogin: true
             },
           },
@@ -202,9 +212,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   if (to?.meta?.isLogin) {
-    let { token, date } = JSON.parse(localStorage.getItem('users')) || '';
-    let dateCheck = dayjs(date).isBefore(dayjs(new Date()))
-    token && dateCheck ? next() : next({ path: "/login" })
+    if (to?.meta?.author) {
+      let { token, date, author } = JSON.parse(localStorage.getItem('users')) || '';
+      let dateCheck = dayjs(date).isBefore(dayjs(new Date()))
+      token && dateCheck && to?.meta?.author.includes(author) ? next() : next({ path: "/login" })
+    } else {
+      next();
+    }
   } else {
     next();
   }

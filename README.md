@@ -16,6 +16,12 @@ dayjs 日期处理插件 ： https://dayjs.fenxianglu.cn/category/#typescript
 
 http://kazupon.github.io/vue-i18n/zh/installation.html#yarn
 
+## vue-clipboard2
+
+https://blog.csdn.net/xhl_james/article/details/104267739
+
+剪切板复制插件
+
 ## 已经配置的东西
 
 Excel 插件配置
@@ -23,6 +29,7 @@ axios 拦截器配置
 VueI18n 多语言配置
 normalize 初始化css 配置 ，文件在 styles中
 v-amap 高德地图
+vue-clipboard2 复制到剪切板插件
 
 
 

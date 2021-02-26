@@ -5,8 +5,10 @@
         <img src="http://img.duoziwang.com/2016/10/27/1424346542.jpg" alt="">
         <router-link to="/home/microChat/chart" @click.native="getComponent('chartbox')"> <i class="iconfont icon-liaotian12"></i> </router-link>
         <router-link to="/home/microChat/contact" @click.native="getComponent('ShowContact')"> <i class="iconfont icon-pengyou"></i> </router-link>
-        <router-link to="/home/microChat/collection" @click.native="getComponent('collectionbox')"> <i class="iconfont icon-caidan_hezi"></i> </router-link>
+        <router-link to="/home/microChat/meeting" @click.native="getComponent('meeting')"> <i class="iconfont icon-huiyi"></i> </router-link>
+        <router-link to="/home/microChat/collection" @click.native="getComponent('collectionbox')"> <i class="iconfont icon-ego-boxfull"></i> </router-link>
         <router-link to="/home/microChat/setting" @click.native="getComponent('setting')"> <i class="iconfont icon-Setting"></i> </router-link>
+    
       </div>
       <div class="middle">
         <div class="search">

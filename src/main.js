@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import VueClipBoard from 'vue-clipboard2'
+
+Vue.use(VueClipBoard);
 
 import dayjs from "dayjs"
 import VueI18n from 'vue-i18n'

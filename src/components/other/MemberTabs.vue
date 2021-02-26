@@ -13,19 +13,18 @@
       </el-table-column>
       <el-table-column prop="registerTime" label="注册时间">
       </el-table-column>
-      <el-table-column prop="registerTime" label="结束时间">
-      </el-table-column>
       <el-table-column prop="describer" label="描述">
       </el-table-column>
     </el-table>
     <el-pagination background layout="prev, pager, next" :total="totalCase" :page-size="12" @current-change="handleCurrentChange"></el-pagination>
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='800px'>
-      <div class="drawer-content">我来啦!</div>
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size='400px'>
+      <memberinfo></memberinfo>
     </el-drawer>
   </div>
 </template>
 
 <script>
+import memberinfo from './MemberInfo'
 export default {
   data() {
     return {
@@ -38,7 +37,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 2,
         account: '范鸿宇',
@@ -46,7 +45,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 3,
         account: '范鸿宇',
@@ -54,7 +53,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 4,
         account: '范鸿宇',
@@ -62,7 +61,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 5,
         account: '范鸿宇',
@@ -70,7 +69,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 6,
         account: '范鸿宇',
@@ -78,7 +77,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 7,
         account: '范鸿宇',
@@ -86,7 +85,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 8,
         account: '范鸿宇',
@@ -94,7 +93,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 9,
         account: '范鸿宇',
@@ -102,7 +101,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 10,
         account: '范鸿宇',
@@ -110,7 +109,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 11,
         account: '范鸿宇',
@@ -118,7 +117,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }, {
         id: 12,
         account: '范鸿宇',
@@ -126,7 +125,7 @@ export default {
         contact: '13426192877',
         status: '正常',
         registerTime: '2020-02-22',
-        describer: '注册'
+        describer: '正常'
       }]
     }
   },
@@ -140,6 +139,9 @@ export default {
       console.log(current);
     }
   },
+  components:{
+    memberinfo
+  }
 }
 </script>
 
