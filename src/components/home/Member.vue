@@ -73,7 +73,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="批量新增" :visible.sync="batchTableAdd" width="30%">
+    <!-- <el-dialog title="批量新增" :visible.sync="batchTableAdd" width="30%">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item label="文件序号" :label-width="formLabelWidth">
           <el-input v-model="form.username" autocomplete="off" prop="username" disabled></el-input>
@@ -88,7 +88,7 @@
         <el-button @click="dialogFormVisible = false">取消新增</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">批量新增</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
 
   </div>
 </template>

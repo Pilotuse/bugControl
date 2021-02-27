@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import loginModule from '../module/loginModule'
 import homeModule from '../module/homeModule'
 import taskModule from '../module/taskModule'
+import memberModule from '../module/memberModule'
 
 Vue.use(Vuex)
 
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     queryOwnBug(context, info) {
       taskModule.queryOwnOrder(info).then(res => info.callback(res))
+    },
+    queryMember(context, info) {
+      memberModule.queryMember(info).then(res => info.callback(res))
     }
   },
   modules: {}
