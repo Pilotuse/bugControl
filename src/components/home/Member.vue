@@ -34,9 +34,6 @@
       <el-tab-pane label="用户管理" name="userManagement" v-if="buttonPermission"></el-tab-pane>
       <el-tab-pane label="开发" name="developer"></el-tab-pane>
       <el-tab-pane label="测试" name="tester"></el-tab-pane>
-      <el-tab-pane label="运维" name="operationer"></el-tab-pane>
-      <el-tab-pane label="需求" name="demander"></el-tab-pane>
-      <el-tab-pane label="三方" name="outsourcing"></el-tab-pane>
       <membertabs :tabsName="tabsName"></membertabs>
     </el-tabs>
 
@@ -62,8 +59,6 @@
           <el-select v-model="form.teamType">
             <el-option label="开发" value="developer"></el-option>
             <el-option label="测试" value="tester"></el-option>
-            <el-option label="需求" value="demander"></el-option>
-            <el-option label="运维" value="operations"></el-option>
           </el-select>
         </el-form-item>
       </el-form>

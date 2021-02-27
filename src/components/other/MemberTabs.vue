@@ -9,12 +9,13 @@
       </el-table-column>
       <el-table-column prop="tellphone" label="联系方式">
       </el-table-column>
-      <el-table-column prop="status" label="账户状态">
+      <el-table-column prop="project" label="项目">
       </el-table-column>
       <el-table-column prop="createDate" label="注册时间">
       </el-table-column>
-      <el-table-column prop="project" label="项目">
+      <el-table-column prop="status" label="账户状态">
       </el-table-column>
+      
     </el-table>
     <el-pagination background layout="prev, pager, next" :total="totalCase" :page-size="12" @current-change="handleCurrentChange"></el-pagination>
     <el-drawer :visible.sync="drawer" :with-header="false" size='400px'>

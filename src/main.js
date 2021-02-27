@@ -6,6 +6,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueClipBoard from 'vue-clipboard2'
 
+
 Vue.use(VueClipBoard);
 
 import dayjs from "dayjs"
@@ -25,6 +26,7 @@ AMap.initAMapApiLoader({
 });
 
 Vue.prototype.dayjs = dayjs;//可以全局使用dayjs
+
 
 import 'github-markdown-css/github-markdown.css'
 import hljs from 'highlight.js'
