@@ -374,3 +374,8 @@ template {
 .el-badge__content.is-fixed.is-dot {
   top: 12px ;
 }
+
+.el-drawer__body,
+.el-drawer {
+    overflow: scroll !important  ;
+}

@@ -1,5 +1,5 @@
 <template>
-  <div class="contact">
+  <div class="chart-box">
     <ul>
       <li>
         <div class="left">
@@ -7,6 +7,9 @@
         </div>
         <div class="right">
           <div class="username">范鸿宇</div>
+          <div class="msg">
+            代码又出bug了
+          </div>
         </div>
       </li>
       <li>
@@ -15,6 +18,9 @@
         </div>
         <div class="right">
           <div class="username">范鸿宇</div>
+          <div class="msg">
+            代码又出bug了
+          </div>
         </div>
       </li>
       <li>
@@ -23,6 +29,9 @@
         </div>
         <div class="right">
           <div class="username">范鸿宇</div>
+          <div class="msg">
+            代码又出bug了
+          </div>
         </div>
       </li>
     </ul>
@@ -67,7 +76,13 @@ li .right {
 }
 
 li .right .username {
-  padding-top: 14px;
+  padding-top: 4px;
+  font-size: 14px;
+}
+
+li .right .msg {
+  padding-top: 6px;
   font-size: 14px;
 }
 </style>
+

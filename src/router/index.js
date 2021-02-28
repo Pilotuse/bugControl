@@ -76,6 +76,15 @@ const routes = [
         component: () => import('../components/home/Statistics.vue'),
         meta: {
           title: 'Quality Center - 统计',
+          isLogin: true,
+          author:["admin"]
+        }
+      }, {
+        path: 'demandapi',
+        name: 'demandapi',
+        component: () => import('../components/other/DemandAPI.vue'),
+        meta: {
+          title: 'Quality Center - api文档',
           isLogin: true
         }
       },
@@ -95,8 +104,80 @@ const routes = [
         meta: {
           title: 'Quality Center - 微聊',
           isLogin: true
+        },
+        children: [
+          {
+            path: 'chart',
+            name: 'chart',
+            component: () => import('../components/micoChat/Chart.vue'),
+            meta: {
+              title: 'Quality Center - 聊天',
+              isLogin: true
+            },
+          },
+          {
+            path: 'contact',
+            name: 'contact',
+            component: () => import('../components/micoChat/Contact.vue'),
+            meta: {
+              title: 'Quality Center - 同事',
+              isLogin: true
+            },
+          },
+          {
+            path: 'meeting',
+            name: 'meeting',
+            component: () => import('../components/micoChat/Meeting.vue'),
+            meta: {
+              title: 'Quality Center - 会议',
+              isLogin: true
+            },
+          },
+          {
+            path: 'collection',
+            name: 'collection',
+            component: () => import('../components/micoChat/Collection.vue'),
+            meta: {
+              title: 'Quality Center - 收藏',
+              isLogin: true
+            },
+          },
+          {
+            path: 'setting',
+            name: 'setting',
+            component: () => import('../components/micoChat/Settings.vue'),
+            meta: {
+              title: 'Quality Center - 设置',
+              isLogin: true
+            },
+          }
+        ]
+      },
+      {
+        path: 'demand',
+        name: 'demand',
+        component: () => import('../components/home/Demand.vue'),
+        meta: {
+          title: 'Quality Center - 需求中心',
+          isLogin: true
         }
-      }
+      }, {
+        path: 'settings',
+        name: 'settings',
+        component: () => import('../components/home/Settings.vue'),
+        meta: {
+          title: 'Quality Center - 设置',
+          isLogin: true
+        }
+      }, {
+        path: 'help',
+        name: 'help',
+        component: () => import('../components/home/Help.vue'),
+        meta: {
+          title: 'Quality Center - 帮助中心',
+          isLogin: true
+        }
+      },
     ]
   },
   {
@@ -131,9 +212,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   if (to?.meta?.isLogin) {
-    let { token, date } = JSON.parse(localStorage.getItem('users')) || '';
-    let dateCheck = dayjs(date).isBefore(dayjs(new Date()))
-    token && dateCheck ? next() : next({ path: "/login" })
+    if (to?.meta?.author) {
+      let { token, date, author } = JSON.parse(localStorage.getItem('users')) || '';
+      let dateCheck = dayjs(date).isBefore(dayjs(new Date()))
+      token && dateCheck && to?.meta?.author.includes(author) ? next() : next({ path: "/login" })
+    } else {
+      next();
+    }
   } else {
     next();
   }

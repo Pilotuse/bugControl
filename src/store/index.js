@@ -2,13 +2,16 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import loginModule from '../module/loginModule'
 import homeModule from '../module/homeModule'
+import taskModule from '../module/taskModule'
+import memberModule from '../module/memberModule'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     loginUserType: '',
-    showModule: 'dashboard'
+    showModule: 'dashboard',
+    markdownValue: ''
   },
   mutations: {
     changeUserType(state, playload) {
@@ -16,6 +19,9 @@ export default new Vuex.Store({
     },
     changeShowModule(state, playload) {
       state.showModule = playload
+    },
+    changeMarkdownValue(state, playload) {
+      state.markdownValue = playload
     }
   },
   actions: {
@@ -30,6 +36,24 @@ export default new Vuex.Store({
     },
     getUserMenu(context, info) {
       homeModule.getUserMenu().then(res => info.callback(res))
+    },
+    insertBugOrder(context, info) {
+      taskModule.insertBugOrder(info).then(res => info.callback(res))
+    },
+    queryUser(context, info) {
+      taskModule.queryUser(info).then(res => info.callback(res))
+    },
+    queryBugOrder(context, info) {
+      taskModule.queryBugOrder(info).then(res => info.callback(res))
+    },
+    queryOwnBug(context, info) {
+      taskModule.queryOwnOrder(info).then(res => info.callback(res))
+    },
+    queryMember(context, info) {
+      memberModule.queryMember(info).then(res => info.callback(res))
+    },
+    queryMemberLength(context, info){
+      memberModule.queryMemberLength(info).then(res => info.callback(res))
     }
   },
   modules: {}

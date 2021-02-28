@@ -48,13 +48,15 @@ export default {
 }
 
 .swiper {
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 20px;
     box-sizing: border-box;
-    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-    height: 26vh;
+    height: 202px;
     overflow: hidden;
+}
+
+.el-carousel__button {
+    width: 12px;
 }
 
 .swiper > div {
