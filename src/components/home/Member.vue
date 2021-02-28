@@ -2,7 +2,7 @@
   <div class="content">
     <h3 class="title">成员信息</h3>
     <div class="button-list">
-      <div class="add" v-if="buttonPermission">
+      <div class="add" v-permission="'admin'">
         <el-button type="success" class="add-one" @click="dialogTableControl">新增用户</el-button>
         <el-button type="success" class="add-manny" @click="batchTableControl">批量新增</el-button>
       </div>

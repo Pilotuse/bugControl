@@ -39,6 +39,19 @@ Vue.directive('highlight', function (el) {
   })
 })
 
+
+// 权限校验模块  自定义指令，只有为admin 的时候才会显示信息或元素
+Vue.directive('permission', {
+  inserted(el, binding) {
+    let permission = binding.value
+    if (permission) {
+      let roleType = JSON.parse(localStorage.getItem('users')).author
+      let result = permission == roleType
+      if (!result) el.parentNode && el.parentNode.removeChild(el);
+    }
+  }
+})
+
 Vue.use(ElementUI)
 
 Vue.use(VueI18n)

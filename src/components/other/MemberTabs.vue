@@ -17,7 +17,7 @@
             </el-table-column>
 
         </el-table>
-        <el-pagination background layout="prev, pager, next" :total="totalCase" :page-size=12 @current-change="handleCurrentChange"></el-pagination>
+        <el-pagination background layout="prev, pager, next" :total="totalCase" :page-size="12" @current-change="handleCurrentChange"></el-pagination>
         <el-drawer :visible.sync="drawer" :with-header="false" size='400px'>
             <memberinfo :tabledata="curPerson"></memberinfo>
         </el-drawer>

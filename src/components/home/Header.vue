@@ -65,7 +65,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 666;
-  width: 100vw;
+  width: 100%;
   min-width: 800px;
   height: 46px;
   z-index: 9999;
