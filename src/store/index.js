@@ -51,6 +51,9 @@ export default new Vuex.Store({
     },
     queryMember(context, info) {
       memberModule.queryMember(info).then(res => info.callback(res))
+    },
+    queryMemberLength(context, info){
+      memberModule.queryMemberLength(info).then(res => info.callback(res))
     }
   },
   modules: {}

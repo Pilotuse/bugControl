@@ -106,6 +106,8 @@ export default {
         teamType: '',
         activation: '1'
       },
+      rules:'',
+      ruleForm:'',
       formLabelWidth: '120px',
       activeName: 'developer',
       buttonPermission: '',
@@ -123,6 +125,7 @@ export default {
     },
     handleClick(tab) {
       this.tabsName = tab.name
+      
     }
   },
   components: {

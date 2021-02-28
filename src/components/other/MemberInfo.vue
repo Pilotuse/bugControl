@@ -11,7 +11,7 @@
                         <i class="iconfont icon-island"></i>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" content="发送邮件" placement="top">
-                        <i class="iconfont icon-fasong"></i>
+                        <i class="iconfont icon-fasong" @click="mainto"></i>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" content="与他合作的需求" placement="top">
                         <i class="iconfont icon-jiedian"></i>
@@ -161,6 +161,10 @@ export default {
                 colorLight: '#fff',
                 correctLevel: QRCode.CorrectLevel.L
             })
+        },
+        mainto(){
+             let [{  username }] = this.tabledata
+             location.href = `mailto:${username}`
         }
     }
 }
