@@ -52,8 +52,12 @@ export default new Vuex.Store({
     queryMember(context, info) {
       memberModule.queryMember(info).then(res => info.callback(res))
     },
-    queryMemberLength(context, info){
+    queryMemberLength(context, info) {
       memberModule.queryMemberLength(info).then(res => info.callback(res))
+    },
+    // 管理员注册接口
+    register(context, info) {
+      memberModule.register(info).then(res => info.callback(res))
     }
   },
   modules: {}

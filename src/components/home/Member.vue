@@ -4,7 +4,7 @@
     <div class="button-list">
       <div class="add" v-permission="'admin'">
         <el-button type="success" class="add-one" @click="dialogTableControl">新增用户</el-button>
-        <el-button type="success" class="add-manny" @click="batchTableControl">批量新增</el-button>
+        <!-- <el-button type="success" class="add-manny" @click="batchTableControl">批量新增</el-button> -->
       </div>
     </div>
 
@@ -31,92 +31,99 @@
 
     <!-- tab栏 -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="用户管理" name="userManagement" v-if="buttonPermission"></el-tab-pane>
+      <el-tab-pane label="用户管理" name="userManagement" v-permission="'admin'"></el-tab-pane>
       <el-tab-pane label="开发" name="developer"></el-tab-pane>
       <el-tab-pane label="测试" name="tester"></el-tab-pane>
       <membertabs :tabsName="tabsName"></membertabs>
     </el-tabs>
 
-    <!-- 新增按钮 -->
-    <el-dialog title="新增成员" :visible.sync="dialogFormVisible" width="30%">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="form.nikename" autocomplete="off" prop="nikename" placeholder="请输入姓名"></el-input>
+    <!-- 新增成员信息填写框 -->
+    <el-dialog title="新增成员" :visible.sync="dialogFormVisible" width="540px">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="110px">
+        <el-form-item label="用户名" prop="cnname">
+          <el-input v-model="ruleForm.cnname"></el-input>
         </el-form-item>
-        <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input v-model="form.username" autocomplete="off" placeholder="请输入邮箱" prop="username"></el-input>
+        <el-form-item label="用户邮箱" prop="email">
+          <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="初始密码" :label-width="formLabelWidth">
-          <el-input v-model="form.password" autocomplete="off" placeholder="初始密码" prop="password" disabled></el-input>
+        <el-form-item label="初始密码" prop="password">
+          <el-input v-model="ruleForm.password"></el-input>
         </el-form-item>
-        <el-form-item label="初始激活" :label-width="formLabelWidth" prop="activation">
-          <el-select v-model="form.activation" disabled>
-            <el-option label="是" value="1"></el-option>
-            <el-option label="否" value="0"></el-option>
-          </el-select>
+        <el-form-item label="电话号码" prop="contact">
+          <el-input v-model="ruleForm.contact"></el-input>
         </el-form-item>
-        <el-form-item label="小组" :label-width="formLabelWidth" prop="teamType">
-          <el-select v-model="form.teamType">
+        <el-form-item label="用户类型" prop="roleType">
+          <el-select v-model="ruleForm.roleType" placeholder="请选择用户类型">
             <el-option label="开发" value="developer"></el-option>
             <el-option label="测试" value="tester"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="初始激活" prop="status">
+          <el-select v-model="ruleForm.status" placeholder="请选择用户类型">
+            <el-option label="初始激活" value="activation"></el-option>
+            <el-option label="初始不激活" value="unactivation"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div>
     </el-dialog>
-
-    <!-- <el-dialog title="批量新增" :visible.sync="batchTableAdd" width="30%">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-        <el-form-item label="文件序号" :label-width="formLabelWidth">
-          <el-input v-model="form.username" autocomplete="off" prop="username" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="选择文件" :label-width="formLabelWidth">
-          <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
-          </el-upload>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消新增</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">批量新增</el-button>
-      </div>
-    </el-dialog> -->
-
   </div>
 </template>
 
 
 <script>
+import { mapActions } from 'vuex'
 import membertabs from '../other/MemberTabs'
 export default {
   data() {
     return {
+      formLabelWidth: '120px',
+      activeName: 'developer',
+      batchTableAdd: false,
+      dialogFormVisible: false,
+      tabsName: '',
       search: {
         team: '',
         status: '',
         desciber: ''
       },
-      form: {
-        nikename: '',
-        username: '',
-        password: '88888888',
-        teamType: '',
-        activation: '1'
+      ruleForm: {
+        cnname: '',
+        email: '',
+        roleType: '',
+        password: '',
+        status: '',
+        contact: '',
       },
-      rules:'',
-      ruleForm:'',
-      formLabelWidth: '120px',
-      activeName: 'developer',
-      buttonPermission: '',
-      batchTableAdd: false,
-      dialogFormVisible: false,
-      tabsName: '',
-    };
+      rules: {
+        cnname: [
+          { required: true, message: '请输入用户姓名', trigger: 'blur' },
+          { pattern: /[\u4e00-\u9fa5]/, min: 2, max: 5, message: '长度在 3 到 5 个中文字符', trigger: 'blur' },
+        ],
+        email: [
+          { required: true, message: '请输入用户邮箱', trigger: 'blur' },
+          { pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message: '请输入用户邮箱', trigger: 'change' },
+        ],
+        roleType: [
+          { required: true, message: '请选择用户类型', trigger: 'change' },
+        ],
+        status: [
+          { required: true, message: '请选择激活状态', trigger: 'change' },
+        ],
+        contact: [
+          { required: true, pattern: /^1[3-9][0-9]{9}$/, message: '请输入手机号码', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, max: 16, min: 6, message: '请输入密码', trigger: 'change' },
+        ]
+      }
+    }
   },
   methods: {
+    ...mapActions(["register"]),
     dialogTableControl() {
       this.dialogFormVisible = true
     },
@@ -125,7 +132,31 @@ export default {
     },
     handleClick(tab) {
       this.tabsName = tab.name
-      
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        let that = this
+        if (valid) {
+          this.register({
+            ...this.ruleForm, callback({ params: { result: { status, msg } } }) {
+              if (status == '0000') {
+                that.$notify({ title: '提示', message: msg, showClose: false, type: 'success' });
+                that.resetForm("ruleForm")
+                that.dialogFormVisible = false
+                setTimeout(() => { that.$router.go(0) }, 2000);  // 优化自动请求数据 不做重新刷新页面
+              } else {
+                that.$notify({ title: '错误', message: msg, showClose: false, type: 'error' });
+              }
+            }
+          })
+        } else {
+          this.$notify({ title: '错误', message: '请完善信息后再次发起注册！', showClose: false, type: 'error' });
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
   },
   components: {
@@ -197,5 +228,10 @@ h3.title {
 
 .el-input {
   width: 80%;
+}
+
+.registeralert {
+  top: 60px !important;
+  margin-top: 100px !important;
 }
 </style>

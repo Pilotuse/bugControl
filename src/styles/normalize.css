@@ -372,10 +372,13 @@ template {
 }
 
 .el-badge__content.is-fixed.is-dot {
-  top: 12px ;
+  top: 12px;
 }
 
-.el-drawer__body,
-.el-drawer {
-    overflow: scroll !important  ;
+.el-drawer__body, .el-drawer {
+  overflow: scroll !important;
+}
+
+.el-notification {
+  margin-top: 50px;
 }
