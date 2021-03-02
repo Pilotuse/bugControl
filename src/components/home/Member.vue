@@ -3,8 +3,8 @@
     <h3 class="title">成员信息</h3>
     <div class="button-list">
       <div class="add" v-permission="'admin'">
-        <el-button type="success" class="add-one" @click="dialogTableControl">新增用户</el-button>
-        <!-- <el-button type="success" class="add-manny" @click="batchTableControl">批量新增</el-button> -->
+        <el-button type="success" class="add-one" @click="dialogTableControl">创建用户</el-button>
+        <el-button type="success" class="add-manny" @click="batchTableControl">批量新增</el-button>
       </div>
     </div>
 
@@ -70,12 +70,30 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <!-- 批量新增成员信息填写框 -->
+    <el-dialog title="批量新增" :visible.sync="dialogBatchVisible" width="540px">
+      <el-form ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="文件选择">
+          <el-upload class="upload-demo" drag action="alert" multiple :limit=1 :before-upload="beforeAvatarUpload" :auto-upload="false" :on-change="loadJsonFromFile">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或点击上传</div>
+            <div class="el-upload__tip" slot="tip">只能上传Excel文件，且批量注册成员不超过100位</div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="batchCreateUsers">立即创建</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
   </div>
 </template>
 
 
 <script>
 import { mapActions } from 'vuex'
+import XLSX from 'xlsx';
 import membertabs from '../other/MemberTabs'
 export default {
   data() {
@@ -84,6 +102,7 @@ export default {
       activeName: 'developer',
       batchTableAdd: false,
       dialogFormVisible: false,
+      dialogBatchVisible: false,
       tabsName: '',
       search: {
         team: '',
@@ -128,7 +147,7 @@ export default {
       this.dialogFormVisible = true
     },
     batchTableControl() {
-      this.batchTableAdd = true
+      this.dialogBatchVisible = true
     },
     handleClick(tab) {
       this.tabsName = tab.name
@@ -157,6 +176,51 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    beforeAvatarUpload(file) {
+      let fileName = file.name.toLowerCase().endsWith('.xlsx') || file.name.toLowerCase().endsWith('.xlx')
+      !fileName && this.$notify.error('上传文件必须是Excel！')
+      return fileName
+    },
+    loadJsonFromFile(file, fileList) {
+      this.uploadFiles = fileList
+    },
+    batchCreateUsers() {
+      let file = this.uploadFiles[0]
+      let reader = new FileReader()
+      reader.readAsBinaryString(file.raw)
+      reader.onload = (e) => {
+        let workbook = XLSX.read(e.target.result, { type: 'binary' });
+        let sheetList = workbook.SheetNames
+        sheetList.forEach((name) => {
+          let worksheet = workbook.Sheets[name];
+          // let dataLength = Object.keys(worksheet).length - 2;  // 数据总长度
+          // 获取数据抬头
+          // let dataHeaderTitle = Object.keys(worksheet).filter(el => el.includes('1') && el.length == 2);
+          // let element = dataHeaderTitle.map(el => el.substring(0, 1))  // 获取当前列表中的行名称
+          // let header = dataHeaderTitle.map(el => worksheet[el].v)      // 获取行名称
+          // console.log(worksheet, header, dataLength, dataHeaderTitle);
+          // let uploadData = []
+          for (let i in worksheet) {
+            let index = Number(i.substring(1, 2))
+            console.log(index);
+            // uploadData[index][worksheet[i]]
+          }
+
+          // console.log(uploadData);
+        });
+        // that.$axiosHttp.axiosPost(url, {
+        //   importData: uploadData
+        // }).then((result) => {
+        //   that.$q.loading.hide();
+        //   if (result.code == 200) {
+        //     that.getData();
+        //     that.$global.notify(result.msg);
+        //   } else {
+        //     that.$global.notifyNegative(result.msg);
+        //   }
+        // })
+      }
     }
   },
   components: {
