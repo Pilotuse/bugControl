@@ -31,7 +31,7 @@
 
     <!-- tab栏 -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="用户管理" name="userManagement" v-permission="'admin'"></el-tab-pane>
+      <el-tab-pane label="用户管理" name="userManagement"  v-permission="admin"></el-tab-pane>
       <el-tab-pane label="开发" name="developer"></el-tab-pane>
       <el-tab-pane label="测试" name="tester"></el-tab-pane>
       <membertabs :tabsName="tabsName"></membertabs>
