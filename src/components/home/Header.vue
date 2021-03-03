@@ -10,10 +10,10 @@
         </el-popover>
 
       </div>
-      <div @click="goTask"><i class="iconfont icon-plus"></i></div>
+      <div @click="goTask" v-if="author == 'tester'"><i class="iconfont icon-plus"></i></div>
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
-          {{username}}
+          {{cnname}}
           <el-tag>{{role}}</el-tag>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
@@ -32,7 +32,8 @@
 export default {
   data() {
     return {
-      username: '',
+      cnname: '',
+      author: '',
       role: ''
     }
   },
@@ -53,7 +54,8 @@ export default {
   },
   created() {
     let userinfo = JSON.parse(localStorage.getItem('users'))
-    this.username = userinfo.username
+    this.cnname = userinfo.cnname
+    this.author = userinfo.author
     this.role = userinfo.author == "developer" ? '开发' : userinfo.author == 'admin' ? '管理员' : '测试'
   }
 }
@@ -100,7 +102,7 @@ export default {
 }
 
 .right {
-  margin-right: 20px;
+  margin-right: 10px;
   float: right;
   height: 100%;
 }
@@ -130,6 +132,7 @@ export default {
 
 .el-tag.el-tag--light {
   background: #6c63ff;
+  margin-left: 4px;
   color: #dcdde1;
 }
 

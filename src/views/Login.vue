@@ -84,9 +84,9 @@ export default {
           let that = this
           this.login({
             username: this.ruleForm.username, password: this.ruleForm.pass, callback(data) {
-              let { status, msg, token, author, username } = data.params.result
+              let { status, msg, token, author, username, cnname } = data.params.result
               if (status == '0000') {
-                localStorage.setItem('users', JSON.stringify({ date: new Date(), token, author, username }))
+                localStorage.setItem('users', JSON.stringify({ date: new Date(), token, author, username, cnname }))
                 // 将数据存在vuex中,然后取拉取该用户的菜单权限，可以单独配置菜单
                 that.$router.push({ path: '/home/dashboard' });
               } else {
@@ -129,7 +129,7 @@ export default {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url("../assets/img/MojaveNight.jpg");
+  background-image: url("../assets/img/MojaveNight.b788c493.jpg");
   background-size: cover;
 }
 

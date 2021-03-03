@@ -382,3 +382,18 @@ template {
 .el-notification {
   margin-top: 50px;
 }
+
+.el-form-item__content {
+  margin-right: 40px;
+}
+
+.el-dropdown>span {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.el-table th .cell .el-checkbox__inner {
+  margin-left: 4px;
+}

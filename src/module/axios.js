@@ -10,7 +10,7 @@ let loading
 function startLoading() {
     loading = Loading.service({
         lock: true,
-        text: '联络地球中...',
+        text: '通讯中...',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.2)'
     })
