@@ -58,6 +58,9 @@ export default new Vuex.Store({
     // 管理员注册接口
     register(context, info) {
       memberModule.register(info).then(res => info.callback(res))
+    },
+    batchRegisterUser(context, info) {
+      memberModule.batchRegister(info).then(res => info.callback(res))
     }
   },
   modules: {}

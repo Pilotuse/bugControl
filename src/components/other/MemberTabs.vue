@@ -45,7 +45,7 @@ export default {
     ...mapActions(["queryMember", "queryMemberLength"]),
     showDrawer(row) {
       this.drawer = true
-      this.curPerson = this.tableData.filter(el => el.jobNum == row.jobNum)
+      this.curPerson = this.tableData.filter(el => el.username == row.username)
     },
     handleCurrentChange(current) {
       this.currentPage = current

@@ -144,7 +144,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["register"]),
+    ...mapActions(["register", "batchRegisterUser"]),
     dialogTableControl() {
       this.dialogFormVisible = true
     },
@@ -191,14 +191,14 @@ export default {
       this.uploadFiles = fileList
     },
     batchCreateUsers() {
+      let that = this
       let file
       try {
         file = this.uploadFiles[0].raw
       } catch (error) {
         this.$notify.error({
           title: '错误',
-          message: '未上传文件，无法批量注册用户！',
-          showClose: false
+          message: '未上传文件，无法批量注册用户！'
         })
       }
       let importData = (file) => {
@@ -214,7 +214,6 @@ export default {
                   data = data.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
                 }
               }
-              //  数据去重
               resolve(data);
             } catch (e) {
               reject("失败");
@@ -223,9 +222,16 @@ export default {
         })
       }
       importData(file).then(value => {
-        console.log(value);
+        this.batchRegisterUser({
+          value,
+          callback({ params: { result: { status, msg } } }) {
+            if (status !== '0000') throw 'err';
+            that.$notify({ title: '成功', message: msg, type: 'success' });
+            that.dialogBatchVisible = false
+          }
+        })
       }, () => {
-        // console.log(' ');
+        that.dialogBatchVisible = false
       })
     }
   },
